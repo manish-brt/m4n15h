@@ -24,7 +24,7 @@ function App() {
 			<BgCirclesAnim />
 			<div className="app">
 				<TransitionGroup>
-					<Router>
+					<Router basename="m4n15h">
 						<Header
 							onNavMenuToggle={(state) => {
 								toggleNavMenu(state);

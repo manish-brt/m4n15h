@@ -1,6 +1,7 @@
 import React from "react";
 import "./homeStyle.css";
 import Button from "../../components/btn/btn";
+
 const HomePage = () => {
 	return (
 		// <div className="main">
@@ -23,7 +24,7 @@ const HomePage = () => {
 						</div>
 						<div className="home-img">
 							<div className="img-box">
-								<img src="img/manish.png" alt="profileImage" />
+								<img src={`img/manish.png`} alt="profileImage" />
 							</div>
 						</div>
 					</div>

@@ -65,6 +65,10 @@ img {
 	vertical-align: middle;
 }
 
+.profileImage{
+    /* background: url("./img/manish.png"); */
+}
+
 .home-img .img-box img {
 	width: 100%;
 	border-radius: 50%;
