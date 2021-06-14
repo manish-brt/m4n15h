@@ -24,7 +24,7 @@ function App() {
 			<BgCirclesAnim />
 			<div className="app">
 				<TransitionGroup>
-					<Router basename="m4n15h">
+					<Router basename="/m4n15h">
 						<Header
 							onNavMenuToggle={(state) => {
 								toggleNavMenu(state);
@@ -36,7 +36,7 @@ function App() {
 								classNames="fade"
 								timeout={5000}
 							>
-								<Switch>
+								<Switch basename="/m4n15h">
 									<Route exact path="/">
 										<HomePage />
 									</Route>
