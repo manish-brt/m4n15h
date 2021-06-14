@@ -1,0 +1,141 @@
+.about-section {
+	padding: 40px 0px;
+}
+
+.about-title {
+	padding: 0 14px;
+	width: 100%;
+	text-align: center;
+	margin-bottom: 42px;
+}
+
+.about-title h2 {
+	font-size: 32px;
+	text-transform: capitalize;
+}
+
+.about-img {
+	width: 40%;
+	padding: 0 16px;
+}
+.about-text {
+	width: 60%;
+	padding: 0 16px;
+}
+
+.about-img .img-box {
+	background-color: var(--whiteAphla25);
+	max-width: 380px;
+	border: 1px solid var(--whiteAphla40);
+	border-radius: 12px;
+	margin: auto;
+}
+
+.about-img .img-box img {
+	width: 100%;
+}
+
+.about-text h3 {
+	text-transform: capitalize;
+	font-size: 20px;
+	margin: 20px 0;
+}
+
+.about-text .skills {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.about-tabs {
+	margin-top: 20px;
+}
+
+.about-tabs .tab-item {
+	padding: 2px 0;
+	background-color: transparent;
+	border: none;
+	text-transform: capitalize;
+	display: inline-block;
+	color: var(--blueDark);
+	font-size: 20px;
+	cursor: pointer;
+	font-weight: 500px;
+	margin: 0 30px 0 0;
+	position: relative;
+	opacity: 0.5;
+	transition: all 0.3s ease;
+}
+
+.about-tabs .tab-item:last-child {
+	margin: 0;
+}
+
+.about-tabs .tab-item::before {
+	content: "";
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 0%;
+	height: 1px;
+	background-color: var(--blueDark);
+	transition: width 0.3s ease;
+}
+
+.about-tabs .tab-item:hover::before {
+	width: 100%;
+}
+
+.about-tabs .tab-item.active::before {
+	width: 100%;
+	background-color: var(--mainColor);
+}
+
+.about-tabs .tab-item.active {
+	color: var(--mainColor);
+	opacity: 1;
+	cursor: auto;
+}
+
+button {
+	font-family: inherit;
+}
+
+.about-text .tab-content {
+	padding: 40px 0px;
+}
+
+.about-text .timeline {
+	position: relative;
+}
+
+.about-text .timeline::before {
+	content: "";
+	position: absolute;
+	height: 100%;
+	width: 1px;
+	top: 0;
+	left: 5px;
+	background-color: var(--mainColor);
+}
+
+@media (max-width: 991px) {
+}
+
+@media (max-width: 767px) {
+	.about-img,
+	.about-text {
+		width: 100%;
+	}
+
+	.about-text{
+		margin-top: 30px;
+	}
+
+	.about-img .img-box img{
+		/* max-height: 200px; */
+		/* object-fit: contain; */
+	}
+}
+
+@media (max-width: 575px) {
+}

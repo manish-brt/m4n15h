@@ -1,0 +1,15 @@
+.portfolio-section {
+	padding: 40px 0px;
+}
+
+.portfolio-title {
+	padding: 0 14px;
+	width: 100%;
+	text-align: center;
+	margin-bottom: 42px;
+}
+
+.portfolio-title h2 {
+	font-size: 32px;
+	text-transform: capitalize;
+}

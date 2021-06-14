@@ -1,0 +1,19 @@
+.item {
+	background-color: var(--whiteAphla25);
+	border: 1px solid var(--whiteAphla40);
+	padding: 5px 15px;
+    margin: 0 10px 10px 0px;
+    /* display: inline-block; */
+	border-radius: 20px;
+	color: var(--mainColor);
+	/* font-weight: 400;
+	text-transform: capitalize;
+	font-family: inherit;
+	font-size: 16px;
+	cursor: pointer;
+	user-select: none;
+	position: relative;
+	overflow: hidden;
+	vertical-align: middle;
+	transition: color 0.3s ease; */
+}

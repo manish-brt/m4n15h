@@ -1,0 +1,37 @@
+.timeline-item {
+	margin-bottom: 28px;
+    position: relative;
+    padding: 10px 0 0 40px;
+}
+
+.timeline-item::before {
+	content: "";
+    position: absolute;
+    height: 11px;
+    width: 11px;
+    background-color: var(--mainColor);
+    left: 0;
+    top: 16px;
+    border-radius: 50%;
+}
+
+.timeline-item:last-child {
+	margin-bottom: 0px;
+}
+
+.timeline-date {
+	display: block;
+	color: var(--mainColor);
+	font-weight: 400;
+	margin: 0 0 10px;
+}
+
+.timeline-item h4 {
+	font-size: 18px;
+	text-transform: capitalize;
+	margin: 0 0 10px;
+}
+
+.timeline-item h4 span {
+	font-weight: 400;
+}

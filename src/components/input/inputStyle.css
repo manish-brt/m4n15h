@@ -1,0 +1,35 @@
+.input-group{
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.input-control::placeholder{
+    color: var(--blueDark);
+    opacity: 0.8;
+    font-weight: 300;
+}
+
+.input-control{
+    display: block;
+    width: 100%;
+    height: 48px;
+    border-radius: 25px;
+    border: none;
+    font-family: inherit;
+    font-weight: 400;
+    font-size: 16px;
+    background-color: var(--whiteAphla25);
+    padding: 0 20px;
+    color: var(--blueDark);
+    border: 1px solid transparent;
+}
+
+.input-control:focus {
+    border-color: var(--whiteAphla40);
+}
+
+textarea.input-control{
+    height: 120px;
+    resize: none;
+    padding-top: 15px;
+}

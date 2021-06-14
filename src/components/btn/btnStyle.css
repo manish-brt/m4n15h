@@ -1,0 +1,44 @@
+a {
+	text-decoration: none;
+}
+
+.btn {
+	line-height: 1.5;
+	background-color: var(--whiteAphla25);
+	border: 1px solid var(--whiteAphla40);
+	padding: 10px 18px;
+	display: inline-block;
+	border-radius: 30px;
+	color: var(--mainColor);
+	font-weight: 500;
+	text-transform: capitalize;
+	font-family: inherit;
+	font-size: 16px;
+	cursor: pointer;
+	user-select: none;
+	position: relative;
+	overflow: hidden;
+	vertical-align: middle;
+    transition: color 0.3s ease;
+}
+
+.btn::before {
+	content: "";
+	position: absolute;
+	left: 0;
+	top: 0;
+	height: 100%;
+	width: 0%;
+	background-color: var(--mainColor);
+	z-index: -1;
+    transition: width 0.3s ease;
+	/* border-radius: 30px;  */
+}
+
+.btn:hover::before{
+    width: 100%;
+}
+
+.btn:hover{
+    color: var(--white);
+}
