@@ -38,7 +38,7 @@ const AboutPage = () => {
 					<div className="row" style={{alignItems: "unset"}}>
 						<div className="about-img">
 							<div className="img-box">
-								<img src="img/manish.png" alt="profileImage" />
+								<img src={`img/manish.png`} alt="profileImage" />
 							</div>
 						</div>
 						<div className="about-text">
