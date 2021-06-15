@@ -1,22 +1,38 @@
 import React from "react";
 import "./portfolioItemStyle.css";
 
-const PortfolioItem = ({showProjPopup}) => {
+const PortfolioItem = ({ showProjPopup, item }) => {
+	const data = {
+		date: "",
+		title: "",
+		subTitle: "",
+		desc: "",
+		images: [],
+		tech: [],
+		role: "",
+		links: {
+			web: "",
+			android: "",
+			ios: "",
+		},
+	};
+
 	return (
 		<div className={`portfolio-item`}>
 			<div className="portfolio-item-thumbnail">
-				<img src="img/univox-thumb.webp" alt="" />
+				<img src={item.images[0] || "img/univox-thumb.webp"} alt="" />
 			</div>
-			<h3 className="portfolio-item-title">Univox Community</h3>
-			<button type="button" className="btn view-project-btn" onClick={()=> showProjPopup(true)} >
+			<h3 className="portfolio-item-title">{item && item.title}</h3>
+			<button
+				type="button"
+				className="btn view-project-btn"
+				onClick={() => showProjPopup(true, item)}
+			>
 				View Project
 			</button>
 			<div className="portfolio-item-details">
 				<div className="desc">
-					<p>
-						Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsa
-						sapiente maiores ut, saepe facere officiis.
-					</p>
+					<p>{item && item.desc}</p>
 				</div>
 				<div className="general-info">
 					<ul>
@@ -32,7 +48,7 @@ const PortfolioItem = ({showProjPopup}) => {
 						<li>
 							View online -{" "}
 							<span>
-								<a href="#" target="_blank">
+								<a href="" target="_blank">
 									www.univoxcommunity.com
 								</a>
 							</span>

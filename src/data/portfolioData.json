@@ -1,0 +1,136 @@
+[
+    {
+        "date": "2019-2020",
+        "title": "Univox Community",
+        "subTitle": "",
+        "desc": "Mobile App, where users can take online surveys and earn rewards.",
+        "images": [
+            "img/univox.webp"
+        ],
+        "tech": [
+            "Ionic Framework",
+            "Angular",
+            "Html",
+            "CSS",
+            "Javascript",
+            "Firebase"
+        ],
+        "role": "Mobile Apps Development",
+        "links": {
+            "web": "",
+            "android": "https://play.google.com/store/apps/details?id=com.marketcube.Univox&hl=en&gl=US",
+            "ios": "https://apps.apple.com/us/app/univox/id1308258963#?platform=iphone"
+        },
+        "type": "mobile"
+    },
+    {
+        "date": "2019",
+        "title": "Lets Laundry",
+        "subTitle": "",
+        "desc": "Android Apps for Customers and Operation Teams of Let's Laundry to submit Customer services like Dry Cleaning, Wash and Iron, Premium Laundry quickly. Users can track the progress/status of their service.",
+        "images": [
+            "img/letslaundry.webp"
+        ],
+        "tech": [
+            "Android",
+            "Java",
+            "Xml",
+            "Firebase"
+        ],
+        "role": "Android App Enhancement",
+        "links": {
+            "web": "",
+            "android": "https://play.google.com/store/apps/details?id=com.letslaundry&hl=en&gl=US",
+            "ios": ""
+        },
+        "type": "mobile"
+    },
+    {
+        "date": "2019 - 2020",
+        "title": "oneCommerce",
+        "subTitle": "Sales & Distribution management app",
+        "desc": "oneCommerce is a FREE all-in-one business software for your retail business to manage your sales & distribution channel.",
+        "images": [
+            "img/oneCommerce.png"
+        ],
+        "tech": [
+            "Android",
+            "Java",
+            "Xml",
+            "Firebase"
+        ],
+        "role": "Android App",
+        "links": {
+            "web": "",
+            "android": "https://play.google.com/store/apps/details?id=com.oc.tache.in&hl=en&gl=US",
+            "ios": ""
+        },
+        "type": "mobile"
+    },
+    {
+        "date": "2019 - 2020",
+        "title": "StoreX",
+        "subTitle": "Apki Digital Dukaan",
+        "desc": "StoreX is a FREE app that helps retailers and store owners to connect with brands and distributors. It is specifically useful for small, medium or large retailers in offline format in FMCG, FMCD, CPG and Pharma industries.",
+        "images": [
+            "img/storex.jpeg"
+        ],
+        "tech": [
+            "Android",
+            "Java",
+            "Xml",
+            "Firebase"
+        ],
+        "role": "Android App",
+        "links": {
+            "web": "",
+            "android": "https://play.google.com/store/apps/details?id=com.oc.storex",
+            "ios": ""
+        },
+        "type": "mobile"
+    },
+    {
+        "date": "2018-2019",
+        "title": "Carzeva App",
+        "subTitle": "",
+        "desc": "Android Apps for Customer Car Care Services and to provide a online platform for Dealers, Workshop and Drivers to manage their Services and Customers",
+        "images": [
+            "img/carzevaapp.webp"
+        ],
+        "tech": [
+            "Android",
+            "Java",
+            "Xml",
+            "Firebase"
+        ],
+        "role": "Android Apps Development",
+        "links": {
+            "web": "",
+            "android": "https://play.google.com/store/apps/developer?id=Zeva&hl=en&gl=US",
+            "ios": ""
+        },
+        "type": "mobile"
+    },
+    {
+        "date": "2018-2019",
+        "title": "Pashuchikitsa App",
+        "subTitle": "",
+        "desc": "An Government Android based Platform/Project to look after the cattles of Livestock Owner(Farmers). A Local Partner (as a mediator)between Livestock Owner and Doctor helps for smooth communication between both",
+        "images": [
+            "img/pashuchikitsa.webp"
+        ],
+        "tech": [
+            "Android",
+            "Java",
+            "Xml",
+            "Firebase"
+        ],
+        "role": "Android App Improvement",
+        "links": {
+            "web": "",
+            "android": "https://play.google.com/store/apps/details?id=com.org.time.pashuchikitsa",
+            "ios": ""
+        },
+        "type": "mobile"
+    }
+]

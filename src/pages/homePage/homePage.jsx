@@ -13,7 +13,7 @@ const HomePage = () => {
 							<h1>Manish Agrawal</h1>
 							<h2>Software Developer</h2>
 							<Button name={"more about me"} link="/about"/>
-							<Button name={"portfolio"} link="/portfolio" mStyle={{marginLeft: "12px"}}/>
+							<Button name={"Get In Touch"} link="/portfolio" mStyle={{marginLeft: "12px"}}/>
 
 							{/* <a href="#" className="btn">
 								more about me

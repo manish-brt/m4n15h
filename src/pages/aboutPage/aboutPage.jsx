@@ -8,7 +8,7 @@ const EduTab = "Education";
 const ExpTab = "Experience";
 
 const AboutPage = () => {
-	const [activeTab, toggleTab] = useState({ EduTab });
+	const [activeTab, toggleTab] = useState({ ExpTab });
 	const [eduDataList, setEduData] = useState([]);
 	const [expDataList, setExpData] = useState([]);
 
@@ -24,6 +24,7 @@ const AboutPage = () => {
 	useEffect(() => {
 		if (expData) {
 			setExpData(expData);
+			toggleTab(ExpTab);
 		}
 	}, [expData]);
 
@@ -35,7 +36,7 @@ const AboutPage = () => {
 					<div className="about-title">
 						<h2>About Me</h2>
 					</div>
-					<div className="row" style={{alignItems: "unset"}}>
+					<div className="row" style={{ alignItems: "unset" }}>
 						<div className="about-img">
 							<div className="img-box">
 								<img src={`img/manish.png`} alt="profileImage" />
@@ -43,27 +44,23 @@ const AboutPage = () => {
 						</div>
 						<div className="about-text">
 							<p>
-								Lorem Ipsum is simply dummy text of the printing and typesetting
-								industry. Lorem Ipsum has been the industry's standard dummy
-								text ever since the 1500s, when an unknown printer took a galley
-								of type and scrambled it to make a type specimen book. It has
-								survived not only five centuries, but also the leap into
-								electronic typesetting, remaining essentially unchanged. It was
-								popularised in the 1960s with the release of Letraset sheets
-								containing Lorem Ipsum passages, and more recently with desktop
-								publishing software like Aldus PageMaker including versions of
-								Lorem Ipsum.
+								Hi, I'm Manish a freelance Developer from Nepal. I have always
+								enjoyed designing and developing cool Apps and have been working
+								for few years.
 							</p>
 							<h3>Skills</h3>
 							<div className="skills">
-								<SkillTag name="Android" />
+								<SkillTag name="Android (Native)" />
+								<SkillTag name="Flutter | Dart - Basic Level" />
 								<SkillTag name="Ionic" />
 								<SkillTag name="React Native" />
-								<SkillTag name="Flutter" />
-								<SkillTag name="Java" />
-								<SkillTag name="Html" />
-								<SkillTag name="Css" />
-								<SkillTag name="Javascript" />
+								<SkillTag name="Angular" />
+								<SkillTag name="React Js" />
+								<SkillTag name="Firebase" />
+								<SkillTag name="C++ | Java" />
+								<SkillTag name="HTML | CSS | Javascript" />
+								<SkillTag name="Python/Django" />
+								<SkillTag name="Figma | Adobe XD" />
 							</div>
 
 							<div className="about-tabs">
@@ -109,7 +106,7 @@ const AboutPage = () => {
 								</div>
 							)}
 
-							<Button name={"Contact Me"} link="/contact"/>
+							<Button name={"Contact Me"} link="/contact" />
 						</div>
 					</div>
 				</div>

@@ -1,8 +1,26 @@
 [
     {
-        "date": "2020-2018",
+        "date": "2020-Present",
         "title": "Software Developer",
-        "title2": "Fi ellements Pvt. Ltd.",
-        "para": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Exercitationem quasi cumque officiis tempore, modi possimus?"
+        "title2": "Freelancer",
+        "para": ""
+    },
+    {
+        "date": "2020-2021",
+        "title": "Android Developer",
+        "title2": "oneCommerce",
+        "para": ""
+    },
+    {
+        "date": "2018-2020",
+        "title": "Software Developer",
+        "title2": "Fi Ellements Pvt. Ltd, Gurugram-India",
+        "para": ""
+    },
+    {
+        "date": "2018-2019",
+        "title": "Android Developer",
+        "title2": "The Success Habits (oneCommerce)",
+        "para": ""
     }
 ]

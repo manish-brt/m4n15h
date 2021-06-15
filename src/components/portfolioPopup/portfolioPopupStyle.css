@@ -55,6 +55,10 @@
 	width: 100%;
 }
 
+.proj-img {
+	width: 32% !important;
+}
+
 .pp-header h3 {
 	font-size: 25px;
 	text-transform: capitalize;
@@ -69,15 +73,42 @@
 	margin-bottom: 10px;
 	font-weight: 500;
 	text-transform: capitalize;
+	display: flex;
+	/* justify-content: center; */
+	align-items: center;
+	/* flex-wrap: wrap; */
 }
 
 .pp-body .general-info li span {
 	font-weight: 300;
+	margin-left: 12px;
 }
 
 .pp-body .general-info li a {
 	text-transform: lowercase;
 	color: var(--mainColor);
+}
+
+.tech-stack {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.tech-item {
+	margin: 4px 0px 4px 12px;
+	font-size: 14px;
+	padding: 4px 10px;
+	font-weight: 400;
+}
+
+.view-btns {
+	/* margin: 0px 18px; */
+}
+
+.link-btn2 {
+	margin: 4px 0px 4px 12px;
+	font-size: 12px;
+	padding: 6px 12px;
 }
 
 @media (max-width: 991px) {

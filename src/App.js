@@ -25,7 +25,7 @@ function App() {
 			<div className="app">
 				<TransitionGroup>
 					<Router 
-          // basename="/m4n15h"
+          basename="/m4n15h"
           >
 						<Header
 							onNavMenuToggle={(state) => {
@@ -39,7 +39,7 @@ function App() {
 								timeout={5000}
 							>
 								<Switch 
-                // basename="/m4n15h"
+                basename="/m4n15h"
                 >
 									<Route exact path="/">
 										<HomePage />

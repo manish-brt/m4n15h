@@ -6,7 +6,9 @@ import {
 	FaInstagram,
 	FaStackOverflow,
 	FaTwitter,
-    FaGithub
+	FaGithub,
+	FaLinkedin,
+	FaWhatsapp,
 } from "react-icons/fa";
 
 const ContactPage = () => {
@@ -20,10 +22,14 @@ const ContactPage = () => {
 				<h3>{line1 || ""}</h3>
 
 				{!socialLinks ? (
-					<p>{line2 || ""}</p>
+					<p>
+						{line2 || ""}
+						{/* {   } */}
+						{/* <FaWhatsapp size={24}/> */}
+					</p>
 				) : (
 					<div className="social-links">
-						<a href="#" target="_blank">
+						{/* <a href="#" target="_blank">
 							<FaFacebookF size={20}/>
 						</a>
 						<a href="#" target="_blank">
@@ -31,12 +37,18 @@ const ContactPage = () => {
 						</a>
 						<a href="#" target="_blank">
 							<FaTwitter size={20}/>
+						</a> */}
+						<a
+							href="https://stackoverflow.com/users/12272522/manish?tab=profile"
+							target="_blank"
+						>
+							<FaStackOverflow size={20} />
 						</a>
-						<a href="#" target="_blank">
-							<FaStackOverflow size={20}/>
+						<a href="https://github.com/manish-brt" target="_blank">
+							<FaGithub size={20} />
 						</a>
-						<a href="#" target="_blank">
-							<FaGithub size={20}/>
+						<a href="https://linkedin.com/in/manish-agrawal" target="_blank">
+							<FaLinkedin size={20} />
 						</a>
 					</div>
 				)}
@@ -70,7 +82,7 @@ const ContactPage = () => {
 					</div>
 					<div className="contact-info">
 						{contactInfoItem("Email", "manish.agrawal.np@gmail.com")}
-						{contactInfoItem("Phone", "+977-9*07000***")}
+						{contactInfoItem("Phone", "+977-9807000251 (WhatsApp)")}
 						{contactInfoItem("Follow", "", true)}
 					</div>
 				</div>

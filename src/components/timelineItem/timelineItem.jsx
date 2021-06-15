@@ -4,18 +4,14 @@ import "./timelineItemStyle.css";
 const TimelineItem = ({ data }) => {
 	return (
 		<div className="timeline-item">
-			{console.log("Yaha Aaya")}
-			<span className="timeline-date">
-				{(data && data.date) || "2014-2018"}
-			</span>
+			<span className="timeline-date">{(data && data.date) || ""}</span>
 			<h4>
-				{(data && data.title) || "Bachelor of Technology"} -{" "}
-				<span> {(data && data.title2) || "MNNIT Allabhad"} </span>
+				{(data && data.title) || ""} 
+				<br/>
+				{/* {" -  "} */}
+				<span> {(data && data.title2) || ""} </span>
 			</h4>
-			<p>
-				{(data && data.para) ||
-					"Lorem ipsum dolor sit, amet consectetur adipisicing elit. Exercitatio quasi cumque officiis tempore, modi possimus?"}
-			</p>
+			<p>{(data && data.para) || ""}</p>
 		</div>
 	);
 };
