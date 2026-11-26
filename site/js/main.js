@@ -78,6 +78,7 @@
       let ready = false;
       const fonts = document.fonts ? document.fonts.ready : Promise.resolve();
       Promise.race([fonts, new Promise((r) => setTimeout(r, 1800))]).then(() => (ready = true));
+      setTimeout(resolve, 2600);                                   // hard cap: never block the page
       (function step(now) {
         const el = now - start;
         let p = Math.min(1, el / min);
@@ -211,28 +212,61 @@
     m.addEventListener('pointerleave', () => (inner.style.transform = ''));
   });
 
-  /* ---------- hero depth: tiles + headline tilt follow cursor and scroll ---------- */
-  const tiles = $$('.depth .tile').map((el) => ({ el, d: parseFloat(el.dataset.depth) || 1 }));
-  const heroTitle = $('.hero__title'), heroEl = $('.hero');
-  if (tiles.length && !reduce) {
-    const m = { x: 0, y: 0, tx: 0, ty: 0 };
-    if (fine) window.addEventListener('pointermove', (e) => {
+  /* ---------- hero depth: tech tiles orbit a glass phone in true 3D ----------
+     Tiles sit on two tilted rings. Each frame we rotate the rings, apply the
+     camera (pitch/yaw from the cursor), project with perspective, sort by depth
+     and blur the far side (depth of field). */
+  const orbit = $('.orbit'), heroTitle = $('.hero__title'), heroEl = $('.hero');
+  if (orbit) {
+    const core = $('.core', orbit);
+    const orbs = $$('.orb', orbit).map((el, i) => {
+      const ringA = i < 7, n = ringA ? 7 : 5, k = ringA ? i : i - 7;
+      return { el, ring: ringA ? 0 : 1, a0: (k / n) * Math.PI * 2 + (ringA ? 0 : .4) };
+    });
+    const rings = [
+      { r: .41, roll: 14 * Math.PI / 180, speed: .16, lift: -.02 },
+      { r: .29, roll: -32 * Math.PI / 180, speed: -.24, lift: .03 },
+    ];
+    const m = { x: .15, y: -.1, tx: .15, ty: -.1 };
+    if (fine && !reduce) window.addEventListener('pointermove', (e) => {
       m.tx = e.clientX / window.innerWidth - .5; m.ty = e.clientY / window.innerHeight - .5;
     }, { passive: true });
-    let heroVisible = true;
-    new IntersectionObserver(([en]) => { heroVisible = en.isIntersecting; if (heroVisible) requestAnimationFrame(depthLoop); }).observe(heroEl);
-    function depthLoop() {
-      if (!heroVisible) return;
-      m.x += (m.tx - m.x) * .06; m.y += (m.ty - m.y) * .06;
-      const sy = Math.min(window.scrollY, window.innerHeight);
-      for (const t of tiles) {
-        const x = -m.x * 46 * t.d, y = -m.y * 34 * t.d - sy * .35 * t.d;
-        t.el.style.transform = `translate3d(${x}px, ${y}px, ${t.d * 60}px) rotateX(${m.y * -14}deg) rotateY(${m.x * 18}deg)`;
+    let t = 0, last = performance.now(), heroVisible = true;
+    const blurCache = new WeakMap();
+    function frame(now) {
+      if (body.classList.contains('is-loading')) { last = now; requestAnimationFrame(frame); return; }
+      const dt = Math.min(.05, (now - last) / 1000); last = now;
+      if (!reduce) t += dt;
+      m.x += (m.tx - m.x) * .05; m.y += (m.ty - m.y) * .05;
+      const W = orbit.clientWidth, f = W * 1.7;
+      const pitch = (14 + m.y * 18) * Math.PI / 180, yaw = (m.x * 34) * Math.PI / 180;
+      const cp = Math.cos(pitch), sp = Math.sin(pitch), cy = Math.cos(yaw), syw = Math.sin(yaw);
+      for (const o of orbs) {
+        const rg = rings[o.ring], a = o.a0 + t * rg.speed, R = rg.r * W;
+        // point on ring (XZ plane), lifted, then rolled around Z
+        let x = Math.cos(a) * R, y = rg.lift * W, z = Math.sin(a) * R;
+        const cr = Math.cos(rg.roll), sr = Math.sin(rg.roll);
+        [x, y] = [x * cr - y * sr, x * sr + y * cr];
+        // camera yaw (Y) then pitch (X)
+        [x, z] = [x * cy + z * syw, -x * syw + z * cy];
+        [y, z] = [y * cp - z * sp, y * sp + z * cp];
+        const s = f / (f + z), depth = z / R;                 // depth: -1 front … +1 back
+        const blur = depth > 0 ? depth * 4.5 : Math.max(0, -depth - .75) * 4;
+        o.el.style.transform = `translate3d(${(x * s).toFixed(1)}px, ${(y * s).toFixed(1)}px, 0) scale(${(s * .95).toFixed(3)})`;
+        const bq = blur > .3 ? Math.round(blur * 2) / 2 : 0;         // quantise: fewer repaints
+        if (blurCache.get(o.el) !== bq) { blurCache.set(o.el, bq); o.el.style.filter = bq ? `blur(${bq}px)` : 'none'; }
+        o.el.style.opacity = (.62 + .38 * Math.min(1, s)).toFixed(2);
+        o.el.style.zIndex = String(500 - Math.round(z));
       }
-      if (fine) heroTitle.style.transform = `perspective(1400px) rotateX(${m.y * -3}deg) rotateY(${m.x * 4}deg)`;
-      requestAnimationFrame(depthLoop);
+      core.style.transform = `translate(-50%, -50%) rotateY(${(-14 + m.x * 30).toFixed(2)}deg) rotateX(${(6 - m.y * 16).toFixed(2)}deg) rotateZ(${(Math.sin(t * .6) * 2).toFixed(2)}deg)`;
+      const sy = Math.min(window.scrollY, window.innerHeight);
+      orbit.style.translate = `0 ${(-sy * .3).toFixed(1)}px`;
+      if (fine && !reduce) heroTitle.style.transform = `perspective(1400px) rotateX(${(m.y * -3).toFixed(2)}deg) rotateY(${(m.x * 4).toFixed(2)}deg)`;
+      if (heroVisible && !reduce) requestAnimationFrame(frame);
     }
-    requestAnimationFrame(depthLoop);
+    new IntersectionObserver(([en]) => { const was = heroVisible; heroVisible = en.isIntersecting; if (heroVisible && !was) { last = performance.now(); requestAnimationFrame(frame); } }).observe(heroEl);
+    requestAnimationFrame(frame);
+    window.addEventListener('resize', () => { if (reduce) requestAnimationFrame(frame); }, { passive: true });
   }
 
   /* ---------- tech stack: infinite band, speed + direction follow scroll, draggable ---------- */

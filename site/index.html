@@ -128,13 +128,31 @@
     <!-- ================= HERO ================= -->
     <section class="hero" id="top" data-section="00">
       <canvas class="hero__gl" aria-hidden="true"></canvas>
-      <div class="depth" aria-hidden="true">
-        <div class="tile t1" data-depth="1.0"><div class="tile__in"><svg><use href="assets/icons.svg#kotlin"/></svg></div></div>
-        <div class="tile t2" data-depth="0.55"><div class="tile__in"><svg><use href="assets/icons.svg#jetpackcompose"/></svg></div></div>
-        <div class="tile t3" data-depth="1.4"><div class="tile__in"><svg><use href="assets/icons.svg#flutter"/></svg></div></div>
-        <div class="tile t4" data-depth="0.35"><div class="tile__in"><svg><use href="assets/icons.svg#react"/></svg></div></div>
-        <div class="tile t5" data-depth="0.8"><div class="tile__in"><svg><use href="assets/icons.svg#ionic"/></svg></div></div>
-        <div class="tile tile--code t6" data-depth="1.15"><div class="tile__in mono">&lt;/&gt;</div></div>
+      <div class="orbit" aria-hidden="true">
+        <div class="orbit__glow"></div>
+        <div class="core">
+          <div class="core__phone">
+            <i class="core__notch"></i>
+            <div class="core__ui">
+              <div class="core__row"><b class="core__avatar"></b><span></span></div>
+              <div class="core__hero"><span class="mono">&lt;/&gt;</span></div>
+              <div class="core__grid"><em></em><em></em><em></em><em></em></div>
+              <span class="core__line"></span><span class="core__line s"></span>
+            </div>
+          </div>
+        </div>
+          <div class="orb" data-i="0"><div class="orb__in lg-kotlin"><svg><use href="assets/icons.svg#kotlin"/></svg></div></div>
+          <div class="orb" data-i="1"><div class="orb__in lg-android"><svg><use href="assets/icons.svg#android"/></svg></div></div>
+          <div class="orb" data-i="2"><div class="orb__in lg-jetpackcompose"><svg><use href="assets/icons.svg#jetpackcompose"/></svg></div></div>
+          <div class="orb" data-i="3"><div class="orb__in lg-flutter"><svg><use href="assets/icons.svg#flutter"/></svg></div></div>
+          <div class="orb" data-i="4"><div class="orb__in lg-react"><svg><use href="assets/icons.svg#react"/></svg></div></div>
+          <div class="orb" data-i="5"><div class="orb__in lg-ionic"><svg><use href="assets/icons.svg#ionic"/></svg></div></div>
+          <div class="orb" data-i="6"><div class="orb__in lg-firebase"><svg><use href="assets/icons.svg#firebase"/></svg></div></div>
+          <div class="orb" data-i="7"><div class="orb__in lg-typescript"><svg><use href="assets/icons.svg#typescript"/></svg></div></div>
+          <div class="orb" data-i="8"><div class="orb__in lg-dart"><svg><use href="assets/icons.svg#dart"/></svg></div></div>
+          <div class="orb" data-i="9"><div class="orb__in lg-capacitor"><svg><use href="assets/icons.svg#capacitor"/></svg></div></div>
+          <div class="orb" data-i="10"><div class="orb__in lg-claude"><svg><use href="assets/icons.svg#claude"/></svg></div></div>
+          <div class="orb" data-i="11"><div class="orb__in lg-googlegemini"><svg><use href="assets/icons.svg#googlegemini"/></svg></div></div>
       </div>
       <span class="plus p1" aria-hidden="true"></span><span class="plus p2" aria-hidden="true"></span>
       <span class="plus p3" aria-hidden="true"></span><span class="plus p4" aria-hidden="true"></span>
@@ -288,70 +306,73 @@
     <!-- ================= SKILLS ================= -->
     <section class="section skills" id="skills" data-section="03">
       <div class="wrap">
-        <div class="head">
-          <p class="label mono" data-reveal><span>03</span>Skills</p>
-          <h2 class="h2" data-lines>The stack I ship with.</h2>
+        <div class="head head--row">
+          <div>
+            <p class="label mono" data-reveal><span>03</span>Skills</p>
+            <h2 class="h2" data-lines>The stack I ship with.</h2>
+          </div>
+          <p class="head__sub mono" data-reveal>Seven years of tools across native, cross-platform, web and AI.</p>
         </div>
-        <div class="skillgrid">
-          <article class="scard scard--wide" data-reveal>
-            <header><span class="mono">01</span><h3>Android</h3></header>
-            <ul class="logos">
-              <li class="lg-kotlin"><svg><use href="assets/icons.svg#kotlin"/></svg>Kotlin</li>
-              <li class="lg-java"><svg><use href="assets/icons.svg#openjdk"/></svg>Java</li>
-              <li class="lg-android"><svg><use href="assets/icons.svg#android"/></svg>Android</li>
-              <li class="lg-compose"><svg><use href="assets/icons.svg#jetpackcompose"/></svg>Compose</li>
-              <li class="lg-firebase"><svg><use href="assets/icons.svg#firebase"/></svg>Firebase</li>
-              <li class="lg-gradle"><svg><use href="assets/icons.svg#gradle"/></svg>Gradle</li>
-              <li class="lg-git"><svg><use href="assets/icons.svg#git"/></svg>Git</li>
-              <li class="lg-ga"><svg><use href="assets/icons.svg#googleanalytics"/></svg>Analytics</li>
-            </ul>
-            <div class="chips"><span>MVVM</span><span>MVI</span><span>MVP</span><span>Clean Architecture</span><span>Coroutines</span><span>Flows</span><span>LiveData</span><span>Room / SQLite</span><span>ViewModel</span><span>Navigation</span><span>Paging</span><span>WorkManager</span><span>CameraX</span><span>Dagger / Hilt</span><span>Retrofit</span><span>Glide</span><span>ExoPlayer</span><span>Material Design</span><span>JUnit</span><span>Deep Links</span><span>Offline-first</span><span>Notifications</span><span>Clarity</span><span>CI/CD</span></div>
+        <div class="skilllist">
+          <article class="srow2" data-reveal>
+            <header class="srow2__head">
+              <span class="srow2__n mono">01</span>
+              <h3>Android</h3>
+              <p>Native apps in Kotlin and Java, built on Jetpack and Clean Architecture.</p>
+              <span class="srow2__count mono">32 tools &amp; practices</span>
+            </header>
+            <div class="srow2__body">
+              <ul class="tiles"><li class="lg-kotlin"><svg aria-hidden="true"><use href="assets/icons.svg#kotlin"/></svg><span>Kotlin</span></li><li class="lg-java"><svg aria-hidden="true"><use href="assets/icons.svg#openjdk"/></svg><span>Java</span></li><li class="lg-android"><svg aria-hidden="true"><use href="assets/icons.svg#android"/></svg><span>Android</span></li><li class="lg-compose"><svg aria-hidden="true"><use href="assets/icons.svg#jetpackcompose"/></svg><span>Compose</span></li><li class="lg-firebase"><svg aria-hidden="true"><use href="assets/icons.svg#firebase"/></svg><span>Firebase</span></li><li class="lg-gradle"><svg aria-hidden="true"><use href="assets/icons.svg#gradle"/></svg><span>Gradle</span></li><li class="lg-git"><svg aria-hidden="true"><use href="assets/icons.svg#git"/></svg><span>Git</span></li><li class="lg-ga"><svg aria-hidden="true"><use href="assets/icons.svg#googleanalytics"/></svg><span>Analytics</span></li></ul>
+              <div class="chips"><span>MVVM</span><span>MVI</span><span>MVP</span><span>Clean Architecture</span><span>Coroutines</span><span>Flows</span><span>LiveData</span><span>Room / SQLite</span><span>ViewModel</span><span>Navigation</span><span>Paging</span><span>WorkManager</span><span>CameraX</span><span>Dagger / Hilt</span><span>Retrofit</span><span>Glide</span><span>ExoPlayer</span><span>Material Design</span><span>JUnit</span><span>Deep Links</span><span>Offline-first</span><span>Notifications</span><span>Clarity</span><span>CI/CD</span></div>
+            </div>
           </article>
-
-          <article class="scard" data-reveal>
-            <header><span class="mono">02</span><h3>Cross-Platform</h3></header>
-            <ul class="logos">
-              <li class="lg-ionic"><svg><use href="assets/icons.svg#ionic"/></svg>Ionic</li>
-              <li class="lg-capacitor"><svg><use href="assets/icons.svg#capacitor"/></svg>Capacitor</li>
-              <li class="lg-react"><svg><use href="assets/icons.svg#react"/></svg>React Native</li>
-              <li class="lg-expo"><svg><use href="assets/icons.svg#expo"/></svg>Expo</li>
-              <li class="lg-flutter"><svg><use href="assets/icons.svg#flutter"/></svg>Flutter</li>
-              <li class="lg-dart"><svg><use href="assets/icons.svg#dart"/></svg>Dart</li>
-              <li class="lg-angular"><svg><use href="assets/icons.svg#angular"/></svg>Angular</li>
-            </ul>
-            <div class="chips"><span>Kotlin Multiplatform</span><span>Compose Multiplatform</span><span>Cordova</span><span>HTML / CSS</span></div>
+          <article class="srow2" data-reveal>
+            <header class="srow2__head">
+              <span class="srow2__n mono">02</span>
+              <h3>Cross-Platform</h3>
+              <p>One codebase for Android and iOS with Ionic, React Native, Flutter and KMP.</p>
+              <span class="srow2__count mono">11 tools &amp; practices</span>
+            </header>
+            <div class="srow2__body">
+              <ul class="tiles"><li class="lg-ionic"><svg aria-hidden="true"><use href="assets/icons.svg#ionic"/></svg><span>Ionic</span></li><li class="lg-capacitor"><svg aria-hidden="true"><use href="assets/icons.svg#capacitor"/></svg><span>Capacitor</span></li><li class="lg-react"><svg aria-hidden="true"><use href="assets/icons.svg#react"/></svg><span>React Native</span></li><li class="lg-expo"><svg aria-hidden="true"><use href="assets/icons.svg#expo"/></svg><span>Expo</span></li><li class="lg-flutter"><svg aria-hidden="true"><use href="assets/icons.svg#flutter"/></svg><span>Flutter</span></li><li class="lg-dart"><svg aria-hidden="true"><use href="assets/icons.svg#dart"/></svg><span>Dart</span></li><li class="lg-angular"><svg aria-hidden="true"><use href="assets/icons.svg#angular"/></svg><span>Angular</span></li></ul>
+              <div class="chips"><span>Kotlin Multiplatform</span><span>Compose Multiplatform</span><span>Cordova</span><span>HTML / CSS</span></div>
+            </div>
           </article>
-
-          <article class="scard" data-reveal>
-            <header><span class="mono">03</span><h3>Web / Backend</h3></header>
-            <ul class="logos">
-              <li class="lg-ts"><svg><use href="assets/icons.svg#typescript"/></svg>TypeScript</li>
-              <li class="lg-js"><svg><use href="assets/icons.svg#javascript"/></svg>JavaScript</li>
-              <li class="lg-react"><svg><use href="assets/icons.svg#react"/></svg>ReactJS</li>
-              <li class="lg-node"><svg><use href="assets/icons.svg#nodedotjs"/></svg>Node.js</li>
-              <li class="lg-python"><svg><use href="assets/icons.svg#python"/></svg>Python</li>
-              <li class="lg-django"><svg><use href="assets/icons.svg#django"/></svg>Django</li>
-              <li class="lg-mysql"><svg><use href="assets/icons.svg#mysql"/></svg>MySQL</li>
-              <li class="lg-apache"><svg><use href="assets/icons.svg#apache"/></svg>Apache</li>
-            </ul>
-            <div class="chips"><span>REST APIs</span><span>VS Code</span></div>
+          <article class="srow2" data-reveal>
+            <header class="srow2__head">
+              <span class="srow2__n mono">03</span>
+              <h3>Web / Backend</h3>
+              <p>Web apps and APIs in TypeScript, React, Node.js and Django.</p>
+              <span class="srow2__count mono">10 tools &amp; practices</span>
+            </header>
+            <div class="srow2__body">
+              <ul class="tiles"><li class="lg-ts"><svg aria-hidden="true"><use href="assets/icons.svg#typescript"/></svg><span>TypeScript</span></li><li class="lg-js"><svg aria-hidden="true"><use href="assets/icons.svg#javascript"/></svg><span>JavaScript</span></li><li class="lg-react"><svg aria-hidden="true"><use href="assets/icons.svg#react"/></svg><span>ReactJS</span></li><li class="lg-node"><svg aria-hidden="true"><use href="assets/icons.svg#nodedotjs"/></svg><span>Node.js</span></li><li class="lg-python"><svg aria-hidden="true"><use href="assets/icons.svg#python"/></svg><span>Python</span></li><li class="lg-django"><svg aria-hidden="true"><use href="assets/icons.svg#django"/></svg><span>Django</span></li><li class="lg-mysql"><svg aria-hidden="true"><use href="assets/icons.svg#mysql"/></svg><span>MySQL</span></li><li class="lg-apache"><svg aria-hidden="true"><use href="assets/icons.svg#apache"/></svg><span>Apache</span></li></ul>
+              <div class="chips"><span>REST APIs</span><span>VS Code</span></div>
+            </div>
           </article>
-
-          <article class="scard" data-reveal>
-            <header><span class="mono">04</span><h3>AI</h3></header>
-            <ul class="logos">
-              <li class="lg-claude"><svg><use href="assets/icons.svg#claude"/></svg>Claude</li>
-              <li class="lg-gemini"><svg><use href="assets/icons.svg#googlegemini"/></svg>Gemini</li>
-              <li class="lg-langchain"><svg><use href="assets/icons.svg#langchain"/></svg>LangChain</li>
-              <li class="lg-streamlit"><svg><use href="assets/icons.svg#streamlit"/></svg>Streamlit</li>
-              <li class="lg-python"><svg><use href="assets/icons.svg#python"/></svg>Python</li>
-            </ul>
-            <div class="chips"><span>LLMs</span><span>RAG</span><span>Gemma</span><span>Google ML Kit</span><span>Cursor</span><span>Google Antigravity</span><span>Gradio</span></div>
+          <article class="srow2" data-reveal>
+            <header class="srow2__head">
+              <span class="srow2__n mono">04</span>
+              <h3>AI</h3>
+              <p>LLM apps, RAG and on-device ML.</p>
+              <span class="srow2__count mono">12 tools &amp; practices</span>
+            </header>
+            <div class="srow2__body">
+              <ul class="tiles"><li class="lg-claude"><svg aria-hidden="true"><use href="assets/icons.svg#claude"/></svg><span>Claude</span></li><li class="lg-gemini"><svg aria-hidden="true"><use href="assets/icons.svg#googlegemini"/></svg><span>Gemini</span></li><li class="lg-langchain"><svg aria-hidden="true"><use href="assets/icons.svg#langchain"/></svg><span>LangChain</span></li><li class="lg-streamlit"><svg aria-hidden="true"><use href="assets/icons.svg#streamlit"/></svg><span>Streamlit</span></li><li class="lg-python"><svg aria-hidden="true"><use href="assets/icons.svg#python"/></svg><span>Python</span></li></ul>
+              <div class="chips"><span>LLMs</span><span>RAG</span><span>Gemma</span><span>Google ML Kit</span><span>Cursor</span><span>Google Antigravity</span><span>Gradio</span></div>
+            </div>
           </article>
-
-          <article class="scard scard--soft" data-reveal>
-            <header><span class="mono">05</span><h3>Soft Skills</h3></header>
-            <div class="chips chips--lg"><span>People Management</span><span>Communication</span><span>Code Reviews</span><span>Mentoring</span><span>Mind-mapping</span><span>Technical Documentation</span><span>Debugging</span></div>
+          <article class="srow2" data-reveal>
+            <header class="srow2__head">
+              <span class="srow2__n mono">05</span>
+              <h3>Soft Skills</h3>
+              <p>Leading teams, mentoring and reviewing code.</p>
+              <span class="srow2__count mono">7 tools &amp; practices</span>
+            </header>
+            <div class="srow2__body">
+              
+              <div class="chips"><span>People Management</span><span>Communication</span><span>Code Reviews</span><span>Mentoring</span><span>Mind-mapping</span><span>Technical Documentation</span><span>Debugging</span></div>
+            </div>
           </article>
         </div>
       </div>
@@ -624,7 +645,7 @@
             <span class="footer__mid">Hand-built · No trackers · No cookies</span>
             <a href="#top" class="totop" data-cursor="Top">Back to top <span aria-hidden="true">↑</span></a>
           </div>
-          <div class="footer__mark" aria-hidden="true">Manish Agrawal</div>
+          <svg class="footer__mark" viewBox="0 0 1200 200" preserveAspectRatio="xMidYMax meet" aria-hidden="true" focusable="false"><defs><linearGradient id="wm-grad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".95"/><stop offset="1" stop-color="#fff" stop-opacity=".12"/></linearGradient></defs><text x="600" y="182" text-anchor="middle" textLength="1188" lengthAdjust="spacingAndGlyphs" fill="url(#wm-grad)">Manish Agrawal</text></svg>
         </footer>
       </div>
     </section>

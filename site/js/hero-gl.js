@@ -45,19 +45,6 @@
         ? smoothstep(.66, 1., sc.y) * .9
         : max(smoothstep(.42, .92, sc.x) * smoothstep(.1, .55, sc.y), smoothstep(.72, 1., sc.y) * .55);
       col = mix(base, col, clamp(mask, 0., 1.) * .96);
-      // receding 3D grid floor: vanishing point drifts with the cursor for parallax depth
-      vec2 p0 = (gl_FragCoord.xy - .5*uRes) / uRes.y;
-      float hz = -.1 + m.y * .04;
-      if (p0.y < hz) {
-        float z = .42 / (hz - p0.y);
-        vec2 gp = vec2((p0.x - m.x * .18) * z * 1.2, z + uTime * .22);
-        vec2 gr = .5 - abs(fract(gp) - .5);                  // distance to nearest grid line
-        float w = .016 * z;
-        float ln = max(1. - smoothstep(0., w, gr.x), 1. - smoothstep(0., w, gr.y));
-        float fade = smoothstep(10., 1.4, z) * smoothstep(0., .04, hz - p0.y);
-        col = mix(col, blue, ln * fade * (uMob > .5 ? .1 : .2));
-      }
-      col += vec3(.14, .25, 1.) * exp(-abs(p0.y - hz) * 60.) * .07;   // horizon glow
       col += (h(gl_FragCoord.xy + uTime) - .5) * .02;      // dither
       gl_FragColor = vec4(col, 1.);
     }`;
