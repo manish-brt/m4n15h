@@ -1,4 +1,8 @@
 {
+  "framework": null,
+  "installCommand": "echo 'no dependencies'",
+  "buildCommand": "echo 'static site, no build step'",
+  "outputDirectory": ".",
   "ignoreCommand": "git diff --quiet HEAD^ HEAD -- .",
   "headers": [
     {
