@@ -202,6 +202,76 @@
     m.addEventListener('pointerleave', () => (inner.style.transform = ''));
   });
 
+  /* ---------- hero depth: tiles + headline tilt follow cursor and scroll ---------- */
+  const tiles = $$('.depth .tile').map((el) => ({ el, d: parseFloat(el.dataset.depth) || 1 }));
+  const heroTitle = $('.hero__title'), heroEl = $('.hero');
+  if (tiles.length && !reduce) {
+    const m = { x: 0, y: 0, tx: 0, ty: 0 };
+    if (fine) window.addEventListener('pointermove', (e) => {
+      m.tx = e.clientX / window.innerWidth - .5; m.ty = e.clientY / window.innerHeight - .5;
+    }, { passive: true });
+    let heroVisible = true;
+    new IntersectionObserver(([en]) => { heroVisible = en.isIntersecting; if (heroVisible) requestAnimationFrame(depthLoop); }).observe(heroEl);
+    function depthLoop() {
+      if (!heroVisible) return;
+      m.x += (m.tx - m.x) * .06; m.y += (m.ty - m.y) * .06;
+      const sy = Math.min(window.scrollY, window.innerHeight);
+      for (const t of tiles) {
+        const x = -m.x * 46 * t.d, y = -m.y * 34 * t.d - sy * .35 * t.d;
+        t.el.style.transform = `translate3d(${x}px, ${y}px, ${t.d * 60}px) rotateX(${m.y * -14}deg) rotateY(${m.x * 18}deg)`;
+      }
+      if (fine) heroTitle.style.transform = `perspective(1400px) rotateX(${m.y * -3}deg) rotateY(${m.x * 4}deg)`;
+      requestAnimationFrame(depthLoop);
+    }
+    requestAnimationFrame(depthLoop);
+  }
+
+  /* ---------- tech stack: infinite band, speed + direction follow scroll, draggable ---------- */
+  const stack = $('.stack');
+  if (stack) {
+    const rows = $$('.stack__row', stack).map((row) => {
+      const originals = Array.from(row.children);
+      const setW = () => originals.reduce((w, c) => w + c.getBoundingClientRect().width, 0) + originals.length * 14;
+      return { row, dir: +row.dataset.dir || 1, originals, setW, w: 0, x: 0 };
+    });
+    function fill() {
+      rows.forEach((r) => {
+        r.row.querySelectorAll('[data-clone]').forEach((c) => c.remove());
+        r.w = r.setW();
+        const need = Math.ceil((window.innerWidth * 2) / Math.max(1, r.w)) + 1;
+        for (let i = 0; i < need; i++) r.originals.forEach((c) => { const k = c.cloneNode(true); k.dataset.clone = ''; k.setAttribute('aria-hidden', 'true'); r.row.appendChild(k); });
+        if (r.dir < 0) r.x = -r.w;
+      });
+    }
+    let boost = 0, scrollDir = 1, lastSY = window.scrollY, drag = null, visible = true, last = performance.now();
+    window.addEventListener('scroll', () => {
+      const dy = window.scrollY - lastSY; lastSY = window.scrollY;
+      if (dy) scrollDir = Math.sign(dy);
+      boost = Math.min(18, boost + Math.abs(dy) * .06);
+    }, { passive: true });
+    stack.addEventListener('pointerdown', (e) => { drag = { x: e.clientX, v: 0 }; stack.classList.add('is-drag'); stack.setPointerCapture(e.pointerId); });
+    stack.addEventListener('pointermove', (e) => { if (!drag) return; const dx = e.clientX - drag.x; drag.x = e.clientX; drag.v = dx; rows.forEach((r) => (r.x += dx * r.dir)); });
+    const endDrag = () => { if (drag) { boost = Math.min(18, Math.abs(drag.v) * .4); stack.classList.remove('is-drag'); drag = null; } };
+    stack.addEventListener('pointerup', endDrag); stack.addEventListener('pointercancel', endDrag);
+    let hover = false; stack.addEventListener('pointerenter', () => (hover = true)); stack.addEventListener('pointerleave', () => (hover = false));
+    new IntersectionObserver(([en]) => { visible = en.isIntersecting; if (visible) { last = performance.now(); requestAnimationFrame(band); } }).observe(stack);
+    function band(now) {
+      if (!visible) return;
+      const dt = Math.min(.05, (now - last) / 1000); last = now;
+      const base = reduce ? 0 : (hover ? 14 : 48);
+      boost *= .92;
+      if (!drag) rows.forEach((r) => { r.x -= (base + boost * 40) * dt * r.dir * scrollDir; });
+      rows.forEach((r) => {
+        if (r.w > 0) { while (r.x <= -r.w) r.x += r.w; while (r.x > 0) r.x -= r.w; }
+        r.row.style.transform = `translate3d(${r.x}px, 0, 0)`;
+      });
+      requestAnimationFrame(band);
+    }
+    const startBand = () => { fill(); requestAnimationFrame(band); };
+    (document.fonts ? document.fonts.ready : Promise.resolve()).then(startBand);
+    let fr, fw = window.innerWidth; window.addEventListener('resize', () => { if (window.innerWidth === fw) return; fw = window.innerWidth; clearTimeout(fr); fr = setTimeout(fill, 250); });
+  }
+
   /* ---------- counters ---------- */
   function countUp(el) {
     const end = +el.dataset.count, t0 = performance.now(), d = 1400;

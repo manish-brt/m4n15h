@@ -1,0 +1,54 @@
+# Publishes the static site in site/ to the gh-pages branch (served by GitHub Pages)
+# on every push to main that touches site/. Uses only GitHub's own checkout action
+# and plain git, so no third-party code runs with write access to the repo.
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "site/**"
+      - ".github/workflows/pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gh-pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out main
+        uses: actions/checkout@v4
+
+      - name: Check out gh-pages
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: out
+
+      - name: Copy site (without server-only files)
+        run: |
+          find out -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+          rsync -a \
+            --exclude api --exclude vercel.json --exclude package.json \
+            --exclude README.md --exclude .gitignore --exclude '.env*' --exclude .vercel \
+            site/ out/
+          touch out/.nojekyll
+
+      - name: Commit and push
+        working-directory: out
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to deploy."
+            exit 0
+          fi
+          git commit -m "Deploy ${GITHUB_SHA::7} from main"
+          git push origin gh-pages
