@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://manish-brt.github.io/m4n15h/sitemap.xml
