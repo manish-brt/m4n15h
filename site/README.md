@@ -13,7 +13,7 @@ Push to `main`. Both hosts redeploy on their own when anything in `site/` change
 - **GitHub Pages** — https://manish-brt.github.io/m4n15h/
   `.github/workflows/pages.yml` copies `site/` (minus server-only files) to the `gh-pages` branch.
   The chat uses its built-in resume engine there.
-- **Vercel** — https://manish-agrawal-portfolio.vercel.app
+- **Vercel** — https://manishagrawal.vercel.app
   Git-connected project `manish-agrawal-portfolio`, Root Directory `site`, production branch `main`.
   Other branches get preview URLs; pushes that don't touch `site/` are skipped (`ignoreCommand`).
   Set `ANTHROPIC_API_KEY` in Project → Settings → Environment Variables to switch the chat to Claude
