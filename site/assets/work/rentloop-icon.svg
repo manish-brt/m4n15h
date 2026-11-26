@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <title>MyRentLoop</title>
+  <clipPath id="f"><rect width="512" height="512" rx="72"/></clipPath>
+  <g clip-path="url(#f)">
+    <rect width="512" height="512" fill="#15171A"/>
+    <rect y="464" width="512" height="48" fill="#F2B01E"/>
+    <path d="M50 410 V150 M50 160 Q50 112 100 112 Q150 112 150 160 V410 M150 160 Q150 112 200 112 Q250 112 250 160 V410 M326 410 V150 M326 172 Q326 112 392 112 M462 64 V410" fill="none" stroke="#FFFFFF" stroke-width="60" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>
