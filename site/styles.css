@@ -343,6 +343,22 @@ a:hover .roll .ch, button:hover .roll .ch, .wcard:hover h3 .ch { transform: tran
 .repos--rich span { color: var(--muted); font: 450 11.5px/1.4 var(--fm); }
 .repos--rich a:hover span { color: rgba(255,255,255,.7); }
 
+/* ---------- inline icons ---------- */
+.ico { display: inline-block; width: 16px; height: 16px; fill: currentColor; flex: none; vertical-align: -3px; }
+.pill { display: inline-flex; align-items: center; gap: 9px; }
+.pill .ico { width: 17px; height: 17px; }
+.wcard__links .pill { background: var(--ink); color: #fff; box-shadow: none; padding: 11px 16px 11px 13px; }
+.wcard__links .pill:hover { background: var(--blue); }
+.wcard__links .pill .ico { width: 19px; height: 19px; }
+.pill .arr { font-style: normal; opacity: .55; transition: transform .4s var(--ease), opacity .3s; }
+.pill:hover .arr { transform: translate(2px, -2px); opacity: 1; }
+.social--inline a { display: inline-flex; align-items: center; gap: 8px; }
+.social--inline .ico { width: 15px; height: 15px; transition: transform .5s var(--ease); }
+.social--inline a:hover .ico { transform: scale(1.15) rotate(-6deg); }
+.ccard > .mono { display: inline-flex; align-items: center; gap: 8px; }
+.ccard > .mono .ico { width: 15px; height: 15px; }
+.hero__mail { display: flex; align-items: center; gap: 8px; }
+
 /* ---------- BLOG ---------- */
 .soon { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: clamp(16px, 3vw, 40px); padding: clamp(24px, 3vw, 40px); border-radius: 26px; background: var(--paper); box-shadow: var(--shadow); }
 .soon__badge { display: inline-flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 99px; background: var(--bg); }
