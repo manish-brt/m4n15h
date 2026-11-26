@@ -11,11 +11,20 @@
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
   if (!location.hash) window.scrollTo(0, 0);
 
+  /* copy-to-clipboard buttons */
+  document.addEventListener('click', async (e) => {
+    const b = e.target.closest('[data-copy]'); if (!b) return;
+    const label = b.querySelector('span');
+    try { await navigator.clipboard.writeText(b.dataset.copy); label.textContent = 'Copied!'; b.classList.add('is-done'); }
+    catch { label.textContent = b.dataset.copy; }
+    setTimeout(() => { label.textContent = 'Copy email'; b.classList.remove('is-done'); }, 1800);
+  });
+
   /* ---------- small helpers ---------- */
   $$('[data-year]').forEach((el) => (el.textContent = new Date().getFullYear()));
-  const clock = $('[data-clock]');
+  const clocks = $$('[data-clock]');
   const fmt = new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Kathmandu', hour: '2-digit', minute: '2-digit', hour12: false });
-  const tick = () => { if (clock) clock.textContent = fmt.format(new Date()); };
+  const tick = () => { const t = fmt.format(new Date()); clocks.forEach((c) => (c.textContent = t)); };
   tick(); setInterval(tick, 15000);
   $$('.btn').forEach((b) => { if (b.querySelector('.btn__arrow')) b.classList.add('has-arrow'); });
 
