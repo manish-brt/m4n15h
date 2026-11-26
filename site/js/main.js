@@ -22,10 +22,6 @@
 
   /* ---------- small helpers ---------- */
   $$('[data-year]').forEach((el) => (el.textContent = new Date().getFullYear()));
-  const clocks = $$('[data-clock]');
-  const fmt = new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Kathmandu', hour: '2-digit', minute: '2-digit', hour12: false });
-  const tick = () => { const t = fmt.format(new Date()); clocks.forEach((c) => (c.textContent = t)); };
-  tick(); setInterval(tick, 15000);
   $$('.btn').forEach((b) => { if (b.querySelector('.btn__arrow')) b.classList.add('has-arrow'); });
 
   /* letter roll: wrap characters (text only, built with DOM APIs) */
