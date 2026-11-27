@@ -90,11 +90,12 @@
   /* ---------- smooth scroll ---------- */
   let lenis = null;
   if (!reduce && window.Lenis) {
-    lenis = new window.Lenis({ duration: 1.15, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+    // lerp mode: follows the wheel/trackpad closely with a short catch-up (no floaty fixed-duration glide)
+    lenis = new window.Lenis({ lerp: 0.12, wheelMultiplier: 1, smoothWheel: true, syncTouch: false });
     (function raf(t) { lenis.raf(t); requestAnimationFrame(raf); })(0);
   }
   function scrollToEl(el) {
-    if (lenis) lenis.scrollTo(el, { offset: el.id === 'top' ? 0 : -8, duration: 1.4 });
+    if (lenis) lenis.scrollTo(el, { offset: el.id === 'top' ? 0 : -8, duration: 1.1, easing: (t) => 1 - Math.pow(1 - t, 4) });
     else el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
   }
   $$('a[href^="#"]').forEach((a) => a.addEventListener('click', (e) => {
@@ -135,39 +136,62 @@
   const prog = $('.progress i'), nav = $('.nav'), sections = $$('[data-section]');
   const rail = $('.tl__rail i'), timeline = $('.timeline');
   const heroInner = $('.hero__inner');
-  let lastY = 0, ticking = false;
+  // Layout is measured once (and on resize), never inside the scroll frame,
+  // so scrolling never forces the browser to recalculate layout.
+  const L = { vh: 0, max: 0, secs: [], st: { top: 0, h: 1 }, tl: { top: 0, h: 1 } };
+  const absTop = (el) => el.getBoundingClientRect().top + window.scrollY;
+  function measure() {
+    L.vh = window.innerHeight; L.max = doc.scrollHeight - L.vh;
+    L.secs = sections.map((s) => ({ id: s.id, top: absTop(s) }));
+    if (statement) L.st = { top: absTop(statement), h: statement.offsetHeight || 1 };
+    if (timeline) L.tl = { top: absTop(timeline), h: timeline.offsetHeight || 1 };
+    onScroll();
+  }
+  let lastY = 0, ticking = false, lastN = -1, lastHeroK = -1, lastRail = -1, navHidden = false;
   function update() {
     ticking = false;
-    const y = window.scrollY, vh = window.innerHeight, max = doc.scrollHeight - vh;
-    prog.style.transform = `scaleX(${max > 0 ? y / max : 0})`;
-    // header hide/show
+    const y = window.scrollY, vh = L.vh;
+    prog.style.transform = `scaleX(${L.max > 0 ? Math.min(1, y / L.max) : 0})`;
+    // header hide/show (only touch the DOM when the state changes)
     if (!body.classList.contains('menu-open')) {
-      if (y > lastY + 6 && y > vh * .7) nav.classList.add('is-hidden');
-      else if (y < lastY - 6 || y < vh * .7) nav.classList.remove('is-hidden');
+      let hide = navHidden;
+      if (y > lastY + 6 && y > vh * .7) hide = true; else if (y < lastY - 6 || y < vh * .7) hide = false;
+      if (hide !== navHidden) { navHidden = hide; nav.classList.toggle('is-hidden', hide); }
     }
     lastY = y;
-    // active section
-    let cur = sections[0];
-    for (const s of sections) if (s.getBoundingClientRect().top < vh * .45) cur = s;
-    const id = sectionToLink[cur.id];
+    // active section from cached offsets
+    let curId = L.secs.length ? L.secs[0].id : '';
+    for (const s of L.secs) if (s.top - y < vh * .45) curId = s.id;
+    const id = sectionToLink[curId];
     const link = id ? navLinks.find((a) => a.getAttribute('href') === '#' + id) : null;
     if (link !== active) { navLinks.forEach((a) => a.classList.toggle('is-active', a === link)); active = link; if (!links.matches(':hover')) movePill(link); }
     if (reduce) return;
     // hero content drifts up and fades as you leave
-    if (y < vh * 1.2) { const k = Math.min(1, y / vh); heroInner.style.transform = `translate3d(0, ${-k * 80}px, 0)`; heroInner.style.opacity = 1 - k * .9; }
-    // statement words light up
+    const k = Math.min(1, y / vh);
+    if (k !== lastHeroK && (k < 1 || lastHeroK < 1)) { lastHeroK = k; heroInner.style.transform = `translate3d(0, ${(-k * 80).toFixed(1)}px, 0)`; heroInner.style.opacity = (1 - k * .9).toFixed(3); }
+    // statement words light up (only the words that changed)
     if (words.length) {
-      const r = statement.getBoundingClientRect();
-      const p = Math.min(1, Math.max(0, (vh * .85 - r.top) / (r.height + vh * .35)));
-      const n = Math.floor(p * words.length * 1.05);
-      for (let i = 0; i < words.length; i++) words[i].classList.toggle('on', i < n);
+      const p = Math.min(1, Math.max(0, (y + vh * .85 - L.st.top) / (L.st.h + vh * .35)));
+      const n = Math.min(words.length, Math.floor(p * words.length * 1.05));
+      if (n !== lastN) {
+        const a = Math.max(0, Math.min(n, lastN)), b = Math.max(n, lastN);
+        for (let i = a; i < b; i++) words[i].classList.toggle('on', i < n);
+        if (lastN < 0) for (let i = 0; i < words.length; i++) words[i].classList.toggle('on', i < n);
+        lastN = n;
+      }
     }
     // timeline rail
-    if (rail) { const r = timeline.getBoundingClientRect(); const p = Math.min(1, Math.max(0, (vh * .6 - r.top) / r.height)); rail.style.transform = `scaleY(${p})`; }
+    if (rail) {
+      const p = Math.round(Math.min(1, Math.max(0, (y + vh * .6 - L.tl.top) / L.tl.h)) * 1000) / 1000;
+      if (p !== lastRail) { lastRail = p; rail.style.transform = `scaleY(${p})`; }
+    }
   }
   function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
   window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', onScroll, { passive: true });
+  let mT; const remeasure = () => { clearTimeout(mT); mT = setTimeout(measure, 120); };
+  window.addEventListener('resize', remeasure, { passive: true });
+  if ('ResizeObserver' in window) new ResizeObserver(remeasure).observe(document.body);
+  window.addEventListener('load', remeasure);
 
   /* ---------- cursor ---------- */
   if (fine && !reduce) {
@@ -175,7 +199,13 @@
     const cur = $('.cursor'), dot = $('.cursor__dot'), ring = $('.cursor__ring'), label = $('.cursor__ring em');
     let x = -100, y = -100, rx = x, ry = y;
     window.addEventListener('pointermove', (e) => { x = e.clientX; y = e.clientY; dot.style.transform = `translate3d(${x}px, ${y}px, 0)`; }, { passive: true });
-    (function follow() { rx += (x - rx) * .2; ry += (y - ry) * .2; ring.style.transform = `translate3d(${rx}px, ${ry}px, 0)`; requestAnimationFrame(follow); })();
+    let following = false;
+    function follow() {
+      rx += (x - rx) * .2; ry += (y - ry) * .2;
+      ring.style.transform = `translate3d(${rx.toFixed(1)}px, ${ry.toFixed(1)}px, 0)`;
+      if (Math.abs(x - rx) + Math.abs(y - ry) > .3) requestAnimationFrame(follow); else following = false;   // sleep when still
+    }
+    window.addEventListener('pointermove', () => { if (!following) { following = true; requestAnimationFrame(follow); } }, { passive: true });
     document.addEventListener('pointerover', (e) => {
       const t = e.target.closest('a, button, [data-cursor]');
       const lbl = t && t.dataset.cursor;
@@ -228,13 +258,15 @@
       m.tx = e.clientX / window.innerWidth - .5; m.ty = e.clientY / window.innerHeight - .5;
     }, { passive: true });
     let t = 0, last = performance.now(), heroVisible = true;
-    const blurCache = new WeakMap();
+    const blurCache = new WeakMap(), zCache = new WeakMap();
+    let orbitW = orbit.clientWidth;
+    if ('ResizeObserver' in window) new ResizeObserver(() => { orbitW = orbit.clientWidth; }).observe(orbit);
     function frame(now) {
       if (body.classList.contains('is-loading')) { last = now; requestAnimationFrame(frame); return; }
       const dt = Math.min(.05, (now - last) / 1000); last = now;
       if (!reduce) t += dt;
       m.x += (m.tx - m.x) * .05; m.y += (m.ty - m.y) * .05;
-      const W = orbit.clientWidth, f = W * 1.7;
+      const W = orbitW, f = W * 1.7;
       const pitch = (14 + m.y * 18) * Math.PI / 180, yaw = (m.x * 34) * Math.PI / 180;
       const cp = Math.cos(pitch), sp = Math.sin(pitch), cy = Math.cos(yaw), syw = Math.sin(yaw);
       for (const o of orbs) {
@@ -252,7 +284,8 @@
         const bq = blur > .3 ? Math.round(blur * 2) / 2 : 0;         // quantise: fewer repaints
         if (blurCache.get(o.el) !== bq) { blurCache.set(o.el, bq); o.el.style.filter = bq ? `blur(${bq}px)` : 'none'; }
         o.el.style.opacity = (.62 + .38 * Math.min(1, s)).toFixed(2);
-        o.el.style.zIndex = String(500 - Math.round(z));
+        const zi = 500 - Math.round(z / 8) * 8;                       // coarse steps: restack rarely
+        if (zCache.get(o.el) !== zi) { zCache.set(o.el, zi); o.el.style.zIndex = String(zi); }
       }
       core.style.transform = `translate(-50%, -50%) rotateY(${(-14 + m.x * 30).toFixed(2)}deg) rotateX(${(6 - m.y * 16).toFixed(2)}deg) rotateZ(${(Math.sin(t * .6) * 2).toFixed(2)}deg)`;
       const sy = Math.min(window.scrollY, window.innerHeight);
@@ -330,7 +363,7 @@
       if (!reduce) $$('[data-count]').forEach(countUp);
       const target = location.hash && document.getElementById(location.hash.slice(1));
       if (target) { if (lenis) lenis.scrollTo(target, { immediate: true, offset: -8 }); else target.scrollIntoView(); }
-      update();
+      measure();
     });
     setTimeout(() => loader.remove(), 1200);
   });
