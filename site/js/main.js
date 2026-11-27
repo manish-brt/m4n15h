@@ -61,20 +61,25 @@
   }
 
   /* stagger delays for reveal groups */
-  $$('.cgrid, .specs, .achv, .stats, .hero__side').forEach((g) => {
-    $$('[data-reveal]', g).forEach((el, i) => el.style.setProperty('--d', (i % 4) * 90));
+  const STAGGER = [0, 70, 125, 170, 205, 230];
+  const stagger = (i, base = 0) => base + STAGGER[Math.min(i, STAGGER.length - 1)];
+  $$('.cgrid, .specs, .achv').forEach((g) => {
+    $$('[data-reveal]', g).forEach((el, i) => el.style.setProperty('--d', stagger(i)));
   });
+  // hero: the words lead, then the pitch/CTAs and the numbers follow while the last line settles
+  $$('[data-reveal]', $('.hero__side') || document.createElement('i')).forEach((el, i) => el.style.setProperty('--d', stagger(i, 320)));
+  $$('[data-reveal]', $('.stats') || document.createElement('i')).forEach((el, i) => el.style.setProperty('--d', stagger(i, 420)));
 
   /* ---------- loader ---------- */
   const loader = $('.loader'), lNum = $('.loader__num'), lBar = $('.loader__bar i');
   function runLoader() {
     return new Promise((resolve) => {
       if (reduce) return resolve();
-      const start = performance.now(), min = 900;
+      const start = performance.now(), min = 520;
       let ready = false;
       const fonts = document.fonts ? document.fonts.ready : Promise.resolve();
-      Promise.race([fonts, new Promise((r) => setTimeout(r, 1800))]).then(() => (ready = true));
-      setTimeout(resolve, 2600);                                   // hard cap: never block the page
+      Promise.race([fonts, new Promise((r) => setTimeout(r, 1100))]).then(() => (ready = true));
+      setTimeout(resolve, 1600);                                   // hard cap: never block the page
       (function step(now) {
         const el = now - start;
         let p = Math.min(1, el / min);
@@ -322,9 +327,9 @@
   if (fine && !reduce) $$('.magnetic').forEach((el) => {
     el.addEventListener('pointermove', (e) => {
       const r = el.getBoundingClientRect();
-      el.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * .22}px, ${(e.clientY - r.top - r.height / 2) * .3}px)`;
+      el.style.translate = `${((e.clientX - r.left - r.width / 2) * .14).toFixed(1)}px ${((e.clientY - r.top - r.height / 2) * .2).toFixed(1)}px`;
     });
-    el.addEventListener('pointerleave', () => (el.style.transform = ''));
+    el.addEventListener('pointerleave', () => (el.style.translate = ''));
   });
 
   /* ---------- hero depth: tech tiles orbit a glass phone in true 3D ----------
@@ -435,7 +440,7 @@
 
   /* ---------- counters ---------- */
   function countUp(el) {
-    const end = +el.dataset.count, t0 = performance.now(), d = 1400;
+    const end = +el.dataset.count, t0 = performance.now(), d = 1000;
     (function f(n) { const p = Math.min(1, (n - t0) / d); el.textContent = Math.round(end * (1 - Math.pow(1 - p, 4))); if (p < 1) requestAnimationFrame(f); })(t0);
   }
 
@@ -448,14 +453,14 @@
     loader.classList.add('is-done');
     body.classList.remove('is-loading');
     requestAnimationFrame(() => {
-      $$('.hero .ln > span').forEach((s, i) => s.style.setProperty('--d', 150 + i * 110));
+      $$('.hero .ln > span').forEach((s, i) => s.style.setProperty('--d', 60 + i * 80));
       $('.hero__title').classList.add('in');
       if (!reduce) $$('[data-count]').forEach(countUp);
       const target = location.hash && document.getElementById(location.hash.slice(1));
       if (target) { if (lenis) lenis.scrollTo(target, { immediate: true, offset: -8 }); else target.scrollIntoView(); }
       measure();
     });
-    setTimeout(() => loader.remove(), 1200);
+    setTimeout(() => loader.remove(), 1000);
   });
   let rT, lastW = window.innerWidth;
   window.addEventListener('resize', () => {
