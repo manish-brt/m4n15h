@@ -161,9 +161,9 @@ a:hover .roll .ch, button:hover .roll .ch { transform: translateY(-100%); }
 .head--row { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; }
 .head__sub { color: var(--muted); max-width: 340px; text-transform: none; line-height: 1.5; }
 .label { display: inline-flex; align-items: center; gap: 12px; margin-bottom: 26px; color: var(--ink-2); }
-.label span { display: inline-grid; place-items: center; min-width: 30px; height: 24px; padding: 0 8px; border-radius: 99px; background: var(--ink); color: #fff; font-size: 11px; }
+.label span:not(.scr) { display: inline-grid; place-items: center; min-width: 30px; height: 24px; padding: 0 8px; border-radius: 99px; background: var(--ink); color: #fff; font-size: 11px; }
 .label--light { color: rgba(255,255,255,.85); }
-.label--light span { background: #fff; color: var(--blue); }
+.label--light span:not(.scr) { background: #fff; color: var(--blue); }
 .h2 { font-size: clamp(44px, 7.6vw, 128px); line-height: .92; font-weight: 500; letter-spacing: -.04em; }
 .chips { display: flex; flex-wrap: wrap; gap: 6px; }
 .chips span { font: 450 12px/1 var(--fm); padding: 8px 11px; border-radius: 99px; background: var(--bg); color: var(--ink-2); box-shadow: inset 0 0 0 1px var(--line); transition: background-color var(--t-hover) ease, color var(--t-hover) ease, box-shadow var(--t-hover) ease; }
@@ -719,3 +719,53 @@ a.copy { text-decoration: none; }
 .panel__facts li { background: rgba(255,255,255,.2); }
 .panel { contain: paint; }
 .label { contain: layout; }
+
+/* ---------- mobile pass ---------- */
+.ai-fab > span:last-child { transition: opacity 160ms ease, max-width 260ms var(--ease-out); max-width: 120px; overflow: hidden; white-space: nowrap; }
+/* touch screens: thumb-sized targets */
+@media (pointer: coarse) {
+  .chip-status { height: 40px; }
+  .totop { height: 44px; padding: 0 18px; }
+  .hero__bottom .social--inline { gap: 0 20px; }
+  .hero__bottom .social--inline a { padding-block: 12px; margin-block: -12px; }
+  .ccard--social .srow a { min-height: 44px; }
+}
+/* phones: the chat button shrinks to its orb once you leave the hero, so it stops covering text */
+@media (max-width: 620px), (max-height: 500px) and (orientation: landscape) {
+  .ai-fab { height: 52px; padding-right: 18px; }
+  .fab-mini .ai-fab { width: 52px; padding: 0 0 0 8px; gap: 0; }
+  .fab-mini .ai-fab > span:last-child { max-width: 0; opacity: 0; }
+  .menu-open .ai-fab { opacity: 0; pointer-events: none; }
+  /* menu never runs off a short screen */
+  .menu { max-height: calc(100svh - var(--nav) - 12px); overflow-y: auto; overscroll-behavior: contain; }
+}
+@media (max-width: 620px) {
+  .section { padding-block: clamp(72px, 19vw, 96px); }
+  .label { margin-bottom: 20px; }
+  /* readable small type */
+  .stats .mono, .product__stats .mono, .panel__facts .mono { font-size: 11px; letter-spacing: .03em; }
+  .label span:not(.scr), .tl__badge, .srow2__n { font-size: 12px; }
+  .repos--rich span { font-size: 12px; }
+  .menu__list a { font-size: 30px; padding-block: 8px; }
+}
+/* short phones: smaller orbit so the headline lands above the fold */
+@media (max-width: 620px) and (max-height: 720px) {
+  .orbit { width: min(64vw, 250px); }
+  .hero__top { margin-top: min(56vw, 230px); }
+  .hero__title { font-size: clamp(42px, 13.4vw, 64px); }
+}
+/* phones in landscape: side-by-side hero and panels instead of a tall stack */
+@media (max-width: 960px) and (max-height: 500px) and (orientation: landscape) {
+  .hero__inner { padding-top: calc(var(--nav) + 12px); justify-content: center; }
+  .orbit { top: calc(50svh + var(--nav) / 3); right: 3vw; width: min(38vw, 74svh); transform: translateY(-50%); }
+  .hero__top { margin-top: 0; margin-bottom: 18px; flex-direction: row; flex-wrap: wrap; gap: 10px; }
+  .hero__top, .hero__title, .hero__row { max-width: 58%; }
+  .hero__title { font-size: clamp(38px, 11svh, 54px); }
+  .hero__row { flex-direction: column; gap: 22px; }
+  .panel { grid-template-columns: .9fr 1.1fr; width: calc(100vw - 2 * var(--g) - 60px); }
+  .panel__stage { order: 0; height: auto; min-height: 300px; }
+  .panel__info { padding-top: 0; }
+  .panel--list { grid-template-columns: 1fr; }
+  .ai { top: 8px; bottom: 8px; height: auto; max-height: none; }
+  .ai__disc { display: none; }
+}
