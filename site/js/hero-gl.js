@@ -17,7 +17,7 @@
     float h(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
     float n(vec2 p){ vec2 i = floor(p), f = fract(p); vec2 u = f*f*(3.-2.*f);
       return mix(mix(h(i), h(i+vec2(1,0)), u.x), mix(h(i+vec2(0,1)), h(i+vec2(1,1)), u.x), u.y); }
-    float fbm(vec2 p){ float v = 0., a = .5; for (int i = 0; i < 5; i++){ v += a*n(p); p = p*2.03 + vec2(1.7, 9.2); a *= .5; } return v; }
+    float fbm(vec2 p){ float v = 0., a = .5; for (int i = 0; i < 4; i++){ v += a*n(p); p = p*2.03 + vec2(1.7, 9.2); a *= .5; } return v; }
     void main(){
       vec2 uv = (gl_FragCoord.xy - .5*uRes) / uRes.y;
       vec2 m = uMouse;
@@ -60,10 +60,10 @@
   const loc = gl.getAttribLocation(pr, 'p'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
   const U = { res: gl.getUniformLocation(pr, 'uRes'), time: gl.getUniformLocation(pr, 'uTime'), mouse: gl.getUniformLocation(pr, 'uMouse'), mob: gl.getUniformLocation(pr, 'uMob') };
 
-  let W = 0, H = 0, scale = 0.5;
+  let W = 0, H = 0, scale = 0.45, quality = 1, slow = 0;
   function resize() {
     const r = canvas.getBoundingClientRect();
-    scale = r.width < 820 ? 0.45 : 0.55;
+    scale = Math.min(quality, r.width < 820 ? 0.4 : 0.45);
     W = Math.max(1, Math.round(r.width * scale)); H = Math.max(1, Math.round(r.height * scale));
     canvas.width = W; canvas.height = H; gl.viewport(0, 0, W, H);
     gl.uniform2f(U.res, W, H); gl.uniform1f(U.mob, r.width < 820 ? 1 : 0);
@@ -80,13 +80,16 @@
   function draw() { gl.uniform1f(U.time, t); gl.uniform2f(U.mouse, mouse.x, mouse.y); gl.drawArrays(gl.TRIANGLES, 0, 3); }
   function frame(now) {
     if (!visible || document.hidden) { running = false; return; }
-    const dt = Math.min(.05, (now - last) / 1000); last = now; t += dt;
+    const raw = now - last;
+    const dt = Math.min(.05, raw / 1000); last = now; t += dt;
+    // adaptive quality: if frames are consistently slow, render at a lower resolution
+    if (raw > 0 && raw < 200) { slow = slow * .95 + (raw > 22 ? 1 : 0) * .05; if (slow > .6 && quality > .3) { quality = .3; slow = 0; resize(); } }
     mouse.x += (mouse.tx - mouse.x) * .06; mouse.y += (mouse.ty - mouse.y) * .06;
     draw(); requestAnimationFrame(frame);
   }
   function start() { if (reduce || running) return; running = true; last = performance.now(); requestAnimationFrame(frame); }
 
-  new IntersectionObserver(([e]) => { visible = e.isIntersecting; if (visible) start(); }).observe(canvas);
+  new IntersectionObserver(([e]) => { visible = e.intersectionRatio > .15; if (visible) start(); }, { threshold: [0, .15, .3] }).observe(canvas);
   document.addEventListener('visibilitychange', () => { if (!document.hidden) start(); });
   let rt; window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(resize, 150); }, { passive: true });
   resize(); start();
