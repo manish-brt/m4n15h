@@ -61,7 +61,7 @@
   }
 
   /* stagger delays for reveal groups */
-  $$('.workgrid, .skillgrid, .cgrid, .specs, .achv, .stats, .hero__side').forEach((g) => {
+  $$('.cgrid, .specs, .achv, .stats, .hero__side').forEach((g) => {
     $$('[data-reveal]', g).forEach((el, i) => el.style.setProperty('--d', (i % 4) * 90));
   });
 
@@ -138,16 +138,44 @@
   const heroInner = $('.hero__inner');
   // Layout is measured once (and on resize), never inside the scroll frame,
   // so scrolling never forces the browser to recalculate layout.
-  const L = { vh: 0, max: 0, secs: [], st: { top: 0, h: 1 }, tl: { top: 0, h: 1 } };
+  const L = { vh: 0, vw: 0, max: 0, secs: [], st: { top: 0, h: 1 }, tl: { top: 0, h: 1 }, hw: null };
+  // pinned horizontal client work
+  const hw = $('.hwork'), hwTrack = $('.hwork__track'), hwPanels = $$('[data-panel]');
+  const hwCount = $('.hwork__count b'), hwProg = $('.hwork__prog i');
+  const hwPhones = hwPanels.map((p) => $('.phones, .logo-plate', p));
+  const pinMQ = window.matchMedia('(min-width: 901px) and (min-height: 560px)');
+  const canPin = () => !!hw && !reduce && pinMQ.matches;
+  // side index + timeline head
+  const sidx = $('.sidx'), sidxLinks = $$('[data-sidx]');
+  const railHead = $('.tl__rail b');
   const absTop = (el) => el.getBoundingClientRect().top + window.scrollY;
   function measure() {
     L.vh = window.innerHeight; L.max = doc.scrollHeight - L.vh;
     L.secs = sections.map((s) => ({ id: s.id, top: absTop(s) }));
     if (statement) L.st = { top: absTop(statement), h: statement.offsetHeight || 1 };
     if (timeline) L.tl = { top: absTop(timeline), h: timeline.offsetHeight || 1 };
+    L.vw = window.innerWidth;
+    if (hw) {
+      const pin = canPin();
+      hw.classList.toggle('is-static', !pin);
+      if (pin) {
+        const dist = Math.max(0, hwTrack.scrollWidth - L.vw);
+        const want = Math.round(L.vh + dist) + 'px';
+        if (hw.style.height !== want) hw.style.height = want;
+        L.hw = { top: absTop(hw), dist, panels: hwPanels.map((p) => ({ l: p.offsetLeft, w: p.offsetWidth })) };
+      } else {
+        if (hw.style.height) hw.style.height = '';
+        hwTrack.style.transform = ''; hwPhones.forEach((ph) => { if (ph) ph.style.transform = ''; });
+        L.hw = null;
+      }
+      L.max = doc.scrollHeight - L.vh;
+      L.secs = sections.map((sec) => ({ id: sec.id, top: absTop(sec) }));
+    }
+    lastHw = -1;
     onScroll();
   }
   let lastY = 0, ticking = false, lastN = -1, lastHeroK = -1, lastRail = -1, navHidden = false;
+  let lastHw = -1, lastHwI = -1, lastSidx = null, sidxOn = false, sidxDark = false;
   function update() {
     ticking = false;
     const y = window.scrollY, vh = L.vh;
@@ -165,6 +193,35 @@
     const id = sectionToLink[curId];
     const link = id ? navLinks.find((a) => a.getAttribute('href') === '#' + id) : null;
     if (link !== active) { navLinks.forEach((a) => a.classList.toggle('is-active', a === link)); active = link; if (!links.matches(':hover')) movePill(link); }
+    // side index: visible after the hero, inverted on the blue contact section
+    if (sidx) {
+      const inPin = L.hw && y > L.hw.top - vh * .2 && y < L.hw.top + L.hw.dist + vh * .1;
+      const on = y > vh * .6 && !inPin;
+      if (on !== sidxOn) { sidxOn = on; sidx.classList.toggle('is-on', on); }
+      if (curId !== lastSidx) { lastSidx = curId; sidxLinks.forEach((a) => a.classList.toggle('is-active', a.dataset.sidx === curId)); }
+      const dark = curId === 'contact';
+      if (dark !== sidxDark) { sidxDark = dark; sidx.classList.toggle('on-dark', dark); }
+    }
+    // pinned horizontal work: vertical scroll drives the track
+    if (L.hw) {
+      const H = L.hw, p = H.dist > 0 ? Math.min(1, Math.max(0, (y - H.top) / H.dist)) : 0;
+      const pr = Math.round(p * 2000) / 2000;
+      if (pr !== lastHw) {
+        lastHw = pr;
+        const x = -pr * H.dist;
+        hwTrack.style.transform = `translate3d(${x.toFixed(1)}px, 0, 0)`;
+        hwProg.style.transform = `scaleX(${(.125 + pr * .875).toFixed(4)})`;
+        // panel nearest the centre -> counter; phones drift against the track for depth
+        let best = 0, bd = Infinity;
+        H.panels.forEach((pp, i) => {
+          const c = pp.l + x + pp.w / 2 - L.vw / 2, rel = c / L.vw;
+          if (Math.abs(c) < bd) { bd = Math.abs(c); best = i; }
+          const ph = hwPhones[i];
+          if (ph && Math.abs(rel) < 1.4 && !reduce) ph.style.transform = `translate3d(${(rel * -70).toFixed(1)}px, 0, 0)`;
+        });
+        if (best !== lastHwI) { lastHwI = best; hwCount.textContent = String(best + 1).padStart(2, '0'); }
+      }
+    }
     if (reduce) return;
     // hero content drifts up and fades as you leave
     const k = Math.min(1, y / vh);
@@ -183,7 +240,7 @@
     // timeline rail
     if (rail) {
       const p = Math.round(Math.min(1, Math.max(0, (y + vh * .6 - L.tl.top) / L.tl.h)) * 1000) / 1000;
-      if (p !== lastRail) { lastRail = p; rail.style.transform = `scaleY(${p})`; }
+      if (p !== lastRail) { lastRail = p; rail.style.transform = `scaleY(${p})`; if (railHead) railHead.style.transform = `translate3d(0, ${(p * L.tl.h).toFixed(1)}px, 0)`; }
     }
   }
   function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
@@ -192,6 +249,50 @@
   window.addEventListener('resize', remeasure, { passive: true });
   if ('ResizeObserver' in window) new ResizeObserver(remeasure).observe(document.body);
   window.addEventListener('load', remeasure);
+  if (pinMQ.addEventListener) pinMQ.addEventListener('change', remeasure);
+
+  /* ---------- section labels: decode / scramble in ---------- */
+  const GLYPHS = '#%&*+=/<>[]{}01ABCDEFXYZ';
+  function scramble(el) {
+    const node = [...el.childNodes].find((n) => n.nodeType === 3 && n.textContent.trim());
+    if (!node || reduce) return;
+    const final = node.textContent, len = final.length, t0 = performance.now(), D = 650 + len * 18;
+    const tail = document.createElement('span'); tail.className = 'scr'; tail.setAttribute('aria-hidden', 'true');
+    node.textContent = ''; el.appendChild(tail);
+    (function f(now) {
+      const p = Math.min(1, (now - t0) / D), done = Math.floor(p * len);
+      let t = '';
+      for (let i = done; i < len; i++) t += final[i] === ' ' ? ' ' : GLYPHS[(Math.random() * GLYPHS.length) | 0];
+      node.textContent = final.slice(0, done); tail.textContent = t;
+      if (p < 1) requestAnimationFrame(f); else { node.textContent = final; tail.textContent = ''; el.removeChild(tail); }
+    })(t0);
+  }
+  const scrIO = new IntersectionObserver((entries) => entries.forEach((en) => {
+    if (en.isIntersecting) { scrIO.unobserve(en.target); setTimeout(() => scramble(en.target), 120); }
+  }), { rootMargin: '0px 0px -12% 0px' });
+
+  /* swipe carousel (not pinned): counter + progress follow the horizontal scroll */
+  const hwView = $('.hwork__view');
+  if (hwView && hwPanels.length) {
+    let sq = false;
+    hwView.addEventListener('scroll', () => {
+      if (sq || L.hw) return; sq = true;
+      requestAnimationFrame(() => {
+        sq = false;
+        const max = hwView.scrollWidth - hwView.clientWidth, p = max > 0 ? hwView.scrollLeft / max : 0;
+        hwProg.style.transform = `scaleX(${(.125 + p * .875).toFixed(4)})`;
+        const i = Math.round(p * (hwPanels.length - 1));
+        if (i !== lastHwI) { lastHwI = i; hwCount.textContent = String(i + 1).padStart(2, '0'); }
+      });
+    }, { passive: true });
+  }
+
+  /* ---------- privacy-friendly analytics (Vercel Web Analytics, cookie-free; Vercel host only) ---------- */
+  if (/\.vercel\.app$/.test(location.hostname)) {
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    const sc = document.createElement('script'); sc.src = '/_vercel/insights/script.js'; sc.defer = true;
+    document.head.appendChild(sc);
+  }
 
   /* ---------- cursor ---------- */
   if (fine && !reduce) {
@@ -224,18 +325,6 @@
       el.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * .22}px, ${(e.clientY - r.top - r.height / 2) * .3}px)`;
     });
     el.addEventListener('pointerleave', () => (el.style.transform = ''));
-  });
-
-  /* ---------- work media: subtle parallax tilt following cursor ---------- */
-  if (fine && !reduce) $$('.wcard__media').forEach((m) => {
-    const inner = m.querySelector('.screens, .logo-plate');
-    if (!inner) return;
-    m.addEventListener('pointermove', (e) => {
-      const r = m.getBoundingClientRect();
-      const px = (e.clientX - r.left) / r.width - .5, py = (e.clientY - r.top) / r.height - .5;
-      inner.style.transform = `translate3d(${px * 18}px, ${py * 14}px, 0)`;
-    });
-    m.addEventListener('pointerleave', () => (inner.style.transform = ''));
   });
 
   /* ---------- hero depth: tech tiles orbit a glass phone in true 3D ----------
@@ -355,6 +444,7 @@
     lineEls.forEach(splitLines);
     $$('[data-reveal], [data-lines]').forEach((el) => io.observe(el));
     $$('.tl').forEach((el) => tlIO.observe(el));
+    $$('.label').forEach((el) => scrIO.observe(el));
     loader.classList.add('is-done');
     body.classList.remove('is-loading');
     requestAnimationFrame(() => {

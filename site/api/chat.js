@@ -9,6 +9,7 @@ const PROFILE = `
 NAME: Manish Agrawal
 ROLE: Senior Mobile Application Developer / Software Developer
 CONTACT: Email manish.agrawal.np@gmail.com · Phone/WhatsApp +91 95654 08829 (https://wa.me/919565408829) · Phone/WhatsApp +977 980 700 0251 (https://wa.me/9779807000251)
+AVAILABILITY: Open to opportunities (role type and rates: ask Manish directly). A résumé PDF is downloadable from the page.
 PROFILES: GitHub https://github.com/manish-brt · LinkedIn https://www.linkedin.com/in/manish-agrawal/ · Stack Overflow https://stackoverflow.com/users/12272522/manish
 
 SUMMARY: Senior Mobile Application Developer with about 7 years of experience (May 2018 – April 2025), including over two years specialising in hybrid apps using Ionic, React Native, Flutter and KMM. Achieved notable user growth through strategic integration of features and performance enhancements. Proficient in collaborating with product teams and conducting code reviews to improve app functionality and user experience.
