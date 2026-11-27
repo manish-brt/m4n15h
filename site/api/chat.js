@@ -12,18 +12,18 @@ CONTACT: Email manish.agrawal.np@gmail.com · Phone/WhatsApp +91 95654 08829 (ht
 AVAILABILITY: Open to opportunities (role type and rates: ask Manish directly). A résumé PDF is downloadable from the page.
 PROFILES: GitHub https://github.com/manish-brt · LinkedIn https://www.linkedin.com/in/manish-agrawal/ · Stack Overflow https://stackoverflow.com/users/12272522/manish
 
-SUMMARY: Senior Mobile Application Developer with about 7 years of experience (May 2018 – April 2025), including over two years specialising in hybrid apps using Ionic, React Native, Flutter and KMM. Achieved notable user growth through strategic integration of features and performance enhancements. Proficient in collaborating with product teams and conducting code reviews to improve app functionality and user experience.
+SUMMARY: Senior Mobile Application Developer with about 7 years of experience (May 2018 – April 2025), including over two years specialising in hybrid apps using Ionic, React Native, Flutter and KMP. Achieved notable user growth through strategic integration of features and performance enhancements. Proficient in collaborating with product teams and conducting code reviews to improve app functionality and user experience.
 
 SKILLS
 - Android: Kotlin, Java, MVVM, MVI, Clean Architecture, MVP, Retrofit, Glide, Firebase, Dagger/Hilt, Material Design, Jetpack (Compose, Room/SQLite, ViewModel, Navigation, Paging, WorkManager, CameraX), Coroutines, Flows, LiveData, Gradle, ExoPlayer, Git, Clarity, Google Analytics, Testing (JUnit), Notifications, Offline capabilities, Deep Links, CI/CD.
 - Cross-platform: Ionic Framework (React, Angular, CSS, HTML, Capacitor, Cordova), React Native (JavaScript, TypeScript, Expo), Flutter (Dart), Kotlin Multiplatform (KMP), Compose Multiplatform (CMP).
-- Web/Backend: TypeScript, JavaScript, ReactJS, Node.js, Python (Django), REST API, Apache, MySQL, VS Code.
+- Web / full-stack: TypeScript, JavaScript, React, Next.js, Vite, Tailwind CSS, Node.js, Hono, PostgreSQL, Prisma, PWAs (service workers, web push), Auth.js, TanStack Query, Zod, PostHog, Vitest, plus Python (Django), REST APIs, Apache and MySQL. His own products SnookBill and MyRentLoop run on this stack. VS Code.
 - Soft skills: People management, communication, mind-mapping, technical documentation, debugging.
 - AI: Google Antigravity, Google ML Kit, Cursor, Claude, LLMs, RAG, LangChain, Gemini (Gemma), Python, Streamlit, Gradio.
 
 EXPERIENCE
 1) Senior Android Developer — Advantium Technologies, Delhi, India (June 2022 – April 2025)
-   - Scaled the Android Saral App to 10k+ DAU and 10L+ downloads by developing major modules (Social Media, Greetings, Man Ki Baat, Tiffin pe Charcha, WhatsApp) and optimising performance. Link: https://play.google.com/store/apps/details?id=com.saral.application&hl=en_IN
+   - Scaled the Android Saral App to 10K+ DAU and 10L+ downloads by developing major modules (Social Media, Greetings, Man Ki Baat, Tiffin pe Charcha, WhatsApp) and optimising performance. Link: https://play.google.com/store/apps/details?id=com.saral.application&hl=en_IN
    - Engineered MVVM + Clean Architecture using Kotlin and Jetpack (Room for offline-first, ViewModel, LiveData, Navigation) with Retrofit, Glide, Firebase.
    - Collaborated with cross-functional teams and user feedback, conducted code reviews, boosted retention with Firebase Analytics, Clarity and notifications.
 2) Ionic Developer — Rumsan, Kathmandu, Nepal (Freelance) (Nov 2023 – Nov 2024)
@@ -40,15 +40,15 @@ EXPERIENCE
    - Pashuchikitsa — native Android/Java app connecting livestock owners and doctors through a local partner.
 
 OWN PRODUCTS (built and run by Manish; both live)
-- SnookBill — https://snookbill.com — Billing software for snooker and pool clubs, gaming zones and futsal courts in Nepal & India. Tagline: "You host the games. We handle the numbers." Live timers billed per minute, per hour or per game; split bills and loser-pays; customer khata, advances and open tabs; food/drink orders to a kitchen display with chef login; staff roles, attendance and payroll; analytics (revenue, peak hours, best sellers); daily 6 AM email report with PDF and daily Google Drive backup; free club page with online table/console/court requests; tournaments (knockout, double elimination, round robin); 58mm/80mm thermal and PDF invoices; member tiers; NPR and INR. Runs in any web browser on phone, tablet or counter PC and installs like an app. 14-day free trial, no card.
-- MyRentLoop — https://myrentloop.com — Rent, meter and bill manager for landlords in Nepal. Tagline: "Collect rent, not headaches." Track buildings, units and tenants; log electricity and water meter readings (NEA slab rates, shared pump/lift costs); create monthly bills in bulk and share on WhatsApp; scheduled reminders (3 days before, on the due date, 3 days after); eSewa, Khalti or FonePay QR on each bill; tenant app via invite code; expenses and profit per building and unit; 3D building view; Nepali, Hindi and English with Bikram Sambat calendar; installable and works offline. Does not collect money itself. Free plan up to 2 units; 14-day Growth trial with no card.
+- SnookBill — https://snookbill.com — Billing software for snooker and pool clubs, gaming zones and futsal courts in Nepal & India. Tagline: "You host the games. We handle the numbers." Live timers billed per minute, per hour or per game; split bills and loser-pays; customer khata, advances and open tabs; food/drink orders to a kitchen display with chef login; staff roles, attendance and payroll; analytics (revenue, peak hours, best sellers); daily 6 AM email report with PDF and daily Google Drive backup; free club page with online table/console/court requests; tournaments (knockout, double elimination, round robin); 58mm/80mm thermal and PDF invoices; member tiers; NPR and INR. Runs in any web browser on phone, tablet or counter PC and installs like an app. 14-day free trial, no card. Built with Next.js, React, TypeScript, PostgreSQL (Prisma) and Tailwind CSS.
+- MyRentLoop — https://myrentloop.com — Rent, meter and bill manager for landlords in Nepal. Tagline: "Collect rent, not headaches." Track buildings, units and tenants; log electricity and water meter readings (NEA slab rates, shared pump/lift costs); create monthly bills in bulk and share on WhatsApp; scheduled reminders (3 days before, on the due date, 3 days after); eSewa, Khalti or FonePay QR on each bill; tenant app via invite code; expenses and profit per building and unit; 3D building view; Nepali, Hindi and English with Bikram Sambat calendar; installable and works offline. Does not collect money itself. Free plan up to 2 units; 14-day Growth trial with no card. Built with React, Vite, TypeScript, a Hono API on PostgreSQL, and works offline as a PWA with web push reminders.
 
 OPEN SOURCE (github.com/manish-brt): Wordcraft (wordpuzzle) — crossword word game in Kotlin, Jetpack Compose, Material 3, Room, MVVM; Saffron — Kotlin Multiplatform / Compose Multiplatform app for Android and iOS; EatFair Partner — Android app for restaurants (Kotlin); ShiftsBook — Expo / React Native app (TypeScript).
 
 EDUCATION: B.Tech (Bachelor's) in Electronics and Communication Engineering, Motilal Nehru National Institute of Technology (MNNIT), Allahabad, India — June 2014 to Aug 2018, CPI 7.29.
 
 ACHIEVEMENTS
-- 10k+ Daily Active Users and 10 lakh downloads — Saral Android App, Advantium Technologies, May 2024.
+- 10K+ Daily Active Users and 10L+ (1 million+) downloads — Saral Android App, Advantium Technologies, May 2024.
 - Most Promising Employee of the Month — Fi Ellements Pvt. Ltd, September 2018.
 - Qualified the COMPEX exam held by the Embassy of India, 2014 (scholarship).
 - Scored 2040/2400 in SAT II, May 2014, to qualify under the DASA scheme.

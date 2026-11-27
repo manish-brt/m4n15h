@@ -769,3 +769,12 @@ a.copy { text-decoration: none; }
   .ai { top: 8px; bottom: 8px; height: auto; max-height: none; }
   .ai__disc { display: none; }
 }
+
+/* ---------- full-stack logos + product "built with" ---------- */
+.lg-next { --c: #000; } .lg-vite { --c: #646cff; } .lg-tw { --c: #06b6d4; } .lg-hono { --c: #e36002; } .lg-pg { --c: #4169e1; }
+.lg-prisma { --c: #2d3748; } .lg-pwa { --c: #5a0fc8; } .lg-vitest { --c: #6e9f18; }
+.pstack { display: grid; gap: 10px; }
+.pstack > .mono { font-size: 11px; color: var(--muted); }
+.pstack ul { display: flex; flex-wrap: wrap; gap: 6px; }
+.pstack li { display: inline-flex; align-items: center; gap: 7px; height: 32px; padding: 0 12px 0 9px; border-radius: 99px; font-size: 13px; color: var(--ink); background: rgba(255,255,255,.6); box-shadow: inset 0 0 0 1px rgba(255,255,255,.85); }
+.pstack svg { width: 15px; height: 15px; fill: var(--c, var(--ink)); }
