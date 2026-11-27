@@ -180,7 +180,7 @@
     onScroll();
   }
   let lastY = 0, ticking = false, lastN = -1, lastHeroK = -1, lastRail = -1, navHidden = false;
-  let lastHw = -1, lastHwI = -1, lastSidx = null, sidxOn = false, sidxDark = false;
+  let fabMini = false, lastHw = -1, lastHwI = -1, lastSidx = null, sidxOn = false, sidxDark = false;
   function update() {
     ticking = false;
     const y = window.scrollY, vh = L.vh;
@@ -192,6 +192,9 @@
       if (hide !== navHidden) { navHidden = hide; nav.classList.toggle('is-hidden', hide); }
     }
     lastY = y;
+    // chat button: full pill in the hero, orb only further down (CSS applies it on phones)
+    const mini = y > vh * .5;
+    if (mini !== fabMini) { fabMini = mini; body.classList.toggle('fab-mini', mini); }
     // active section from cached offsets
     let curId = L.secs.length ? L.secs[0].id : '';
     for (const s of L.secs) if (s.top - y < vh * .45) curId = s.id;
